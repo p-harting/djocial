@@ -1,6 +1,9 @@
 from django.views.generic import TemplateView
 from django.views.generic import DetailView
 from .models import Post
+from django.shortcuts import redirect
+from django.views.generic.edit import FormView
+from django import forms
 
 class HomeView(TemplateView):
     template_name = 'index.html'
@@ -16,3 +19,19 @@ class PostDetailView(DetailView):
     context_object_name = 'post'
     slug_field = 'slug'
     slug_url_kwarg = 'slug'
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['content']
+
+class CreatePostView(FormView):
+    form_class = PostForm
+    template_name = 'index.html'
+    success_url = '/'
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.author = self.request.user
+        post.save()
+        return super().form_valid(form)
