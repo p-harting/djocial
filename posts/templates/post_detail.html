@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ post.title }}</h1>
+  <p><strong>Author:</strong> {{ post.author }} | <strong>Date:</strong> {{ post.created_on|date:"d M Y H:i" }}</p>
+  <!--
+  {% if post.image %}
+    <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width: 100%; height: auto;">
+  {% endif %}
+  -->
+  <div>{{ post.content|linebreaks }}</div>
+{% endblock %}

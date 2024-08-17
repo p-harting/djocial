@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>All Posts</h1>
+<h1>All Posts</h1>
 
-  {% for post in posts %}
-    <div class="post">
-      <h2>{{ post.title }}</h2>
-      <p><strong>Author:</strong> {{ post.author }} | <strong>Date:</strong> {{ post.created_on|date:"d M Y H:i" }}</p>
-      <!--
+{% for post in posts %}
+<div class="post">
+    <h2><a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a></h2>
+    <p><strong>Author:</strong> {{ post.author }} | <strong>Date:</strong> {{ post.created_on|date:"d M Y H:i" }}</p>
+    <!--
       {% if post.image %}
         <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width: 100%; height: auto;">
       {% endif %}
       -->
-      <p>{{ post.content|linebreaks }}</p>
-      <hr>
-    </div>
-  {% empty %}
-    <p>Nothing posted yet.</p>
-  {% endfor %}
+    <p>{{ post.content|linebreaks }}</p>
+    <hr>
+</div>
+{% empty %}
+<p>Nothing posted yet.</p>
+{% endfor %}
 {% endblock %}
