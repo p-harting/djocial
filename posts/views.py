@@ -7,6 +7,8 @@ from django import forms
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 class HomeView(TemplateView):
     template_name = 'index.html'
@@ -39,6 +41,7 @@ class CreatePostView(FormView):
         post.save()
         return super().form_valid(form)
 
+@login_required(login_url='/accounts/login/')
 def LikeView(request, slug):
     post = get_object_or_404(Post, slug=slug)
     if request.user in post.likes.all():
