@@ -1,15 +1,29 @@
 from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
+from django.utils.crypto import get_random_string
 
 STATUS = ((0, "Draft"), (1, "Published"))
 
 class Post(models.Model):
-    title = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=200, unique=True)
+    slug = models.SlugField(max_length=18, blank=True, unique=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     content = models.TextField()
     image = CloudinaryField('image', default='placeholder')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     status = models.IntegerField(choices=STATUS, default=1)
+
+    def save(self, *args, **kwargs):
+        self.create_slug()
+        super(Post, self).save(*args, **kwargs)
+
+    def create_slug(self):
+        if not self.slug:
+            slug_is_wrong = True
+            while slug_is_wrong:
+                self.slug = get_random_string(18, '0123456789')
+                slug_is_wrong = False
+                
+                if Post.objects.filter(slug=self.slug).exists():
+                    slug_is_wrong = True

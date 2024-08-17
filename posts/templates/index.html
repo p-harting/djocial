@@ -4,8 +4,8 @@
 <h1>All Posts</h1>
 
 {% for post in posts %}
-<div class="post">
-    <h2><a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a></h2>
+<a class="text-decoration-none link-dark" href="{% url 'post_detail' post.slug %}">
+  <div class="post no-underline-link">
     <p><strong>Author:</strong> {{ post.author }} | <strong>Date:</strong> {{ post.created_on|date:"d M Y H:i" }}</p>
     <!--
       {% if post.image %}
@@ -14,7 +14,8 @@
       -->
     <p>{{ post.content|linebreaks }}</p>
     <hr>
-</div>
+  </div>
+</a>
 {% empty %}
 <p>Nothing posted yet.</p>
 {% endfor %}
