@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Hello, {{ user_account.username }}!</h1>
+    
+    {% if is_own_account %}
+        <form method="post">
+            {% csrf_token %}
+            
+            <!-- Email Update Section -->
+            <h3>Update Email</h3>
+            <input type="email" name="email" value="{{ user_account.email }}" placeholder="New email">
+            <button type="submit" name="email_form">Update Email</button>
+            
+            <!-- Password Update Section -->
+            <h3>Change Password</h3>
+            {{ password_form.as_p }}
+            <button type="submit" name="password_form">Change Password</button>
+            
+        </form>
+    {% else %}
+        <h2>This is the account of {{ user_account.username }}</h2>
+    {% endif %}
+{% endblock %}
