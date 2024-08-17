@@ -4,30 +4,31 @@
 <h1>All Posts</h1>
 
 {% if user.is_authenticated %}
-  <form method="post" action="{% url 'create_post' %}">
-    {% csrf_token %}
-    <div class="mb-3">
-      <label for="postContent" class="form-label">Write a new post:</label>
-      <textarea id="postContent" name="content" class="form-control" rows="3" required></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-  <hr>
+<form method="post" action="{% url 'create_post' %}">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="postContent" class="form-label">Write a new post:</label>
+    <textarea id="postContent" name="content" class="form-control" rows="3" required></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<hr>
 {% endif %}
 
 {% for post in posts %}
-<a class="text-decoration-none link-dark" href="{% url 'post_detail' post.slug %}">
-  <div class="post no-underline-link">
-    <p><strong>Author:</strong> {{ post.author }} | <strong>Date:</strong> {{ post.created_on|date:"d M Y H:i" }}</p>
-    <!--
+<div class="post no-underline-link">
+  <p><strong>Author:</strong> {{ post.author }} | <strong>Date:</strong> {{ post.created_on|date:"d M Y H:i" }}</p>
+  <!--
       {% if post.image %}
         <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width: 100%; height: auto;">
       {% endif %}
       -->
-    <p>{{ post.content|safe|linebreaks }}</p>
-    <hr>
-  </div>
-</a>
+  <p>{{ post.content|safe|linebreaks }}</p>
+  <a href="{% url 'post_detail' post.slug %}">
+    <div>View post</div>
+  </a>
+</div>
+<hr>
 {% empty %}
 <p>Nothing posted yet.</p>
 {% endfor %}

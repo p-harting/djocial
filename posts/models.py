@@ -13,6 +13,7 @@ class Post(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     status = models.IntegerField(choices=STATUS, default=1)
+    likes = models.ManyToManyField(User, related_name='post_like')
 
     def save(self, *args, **kwargs):
         self.create_slug()
@@ -27,3 +28,6 @@ class Post(models.Model):
                 
                 if Post.objects.filter(slug=self.slug).exists():
                     slug_is_wrong = True
+    
+    def number_of_likes(self):
+        return self.likes.count()

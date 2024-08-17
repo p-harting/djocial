@@ -4,6 +4,9 @@ from .models import Post
 from django.shortcuts import redirect
 from django.views.generic.edit import FormView
 from django import forms
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 class HomeView(TemplateView):
     template_name = 'index.html'
@@ -35,3 +38,11 @@ class CreatePostView(FormView):
         post.author = self.request.user
         post.save()
         return super().form_valid(form)
+
+def LikeView(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    if request.user in post.likes.all():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+    return HttpResponseRedirect(reverse('post_detail', args=[slug]))

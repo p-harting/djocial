@@ -1,12 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>{{ post.title }}</h1>
-  <p><strong>Author:</strong> {{ post.author }} | <strong>Date:</strong> {{ post.created_on|date:"d M Y H:i" }}</p>
-  <!--
+<h1>{{ post.title }}</h1>
+<p><strong>Author:</strong> {{ post.author }} | <strong>Date:</strong> {{ post.created_on|date:"d M Y H:i" }}</p>
+<!--
   {% if post.image %}
     <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width: 100%; height: auto;">
   {% endif %}
   -->
-  <div>{{ post.content|linebreaks }}</div>
+<div>{{ post.content|linebreaks }}</div>
+<form action="{% url 'like_post' post.slug %}" method="POST">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-primary">
+    {% if user in post.likes.all %}
+    Unlike
+    {% else %}
+    Like
+    {% endif %}
+  </button>
+</form>
+<p>{{ post.number_of_likes }} Likes</p>
 {% endblock %}
