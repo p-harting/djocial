@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 from django.views.generic import DetailView
-from .models import Post
+from .models import Post, Comment
 from django.shortcuts import redirect
 from django.views.generic.edit import FormView
 from django import forms
@@ -18,6 +18,8 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.views.generic import DetailView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 class HomeView(TemplateView):
     template_name = 'index.html'
@@ -33,6 +35,25 @@ class PostDetailView(DetailView):
     context_object_name = 'post'
     slug_field = 'slug'
     slug_url_kwarg = 'slug'
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        comment_body = request.POST.get('comment_body')
+        
+        if comment_body:
+            Comment.objects.create(
+                post=self.object,
+                author=request.user,
+                body=comment_body
+            )
+            return redirect('post_detail', slug=self.object.slug)
+        
+        context = self.get_context_data()
+        return self.render_to_response(context)
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
 class PostForm(forms.ModelForm):
     class Meta:
