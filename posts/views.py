@@ -36,15 +36,27 @@ class PostDetailView(DetailView):
     slug_field = 'slug'
     slug_url_kwarg = 'slug'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Get top-level comments (those without a parent)
+        context['top_level_comments'] = self.object.comments.filter(parent__isnull=True)
+        return context
+
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         comment_body = request.POST.get('comment_body')
-        
+        parent_id = request.POST.get('parent_id')
+
         if comment_body:
+            parent_comment = None
+            if parent_id:
+                parent_comment = get_object_or_404(Comment, id=parent_id)
+            
             Comment.objects.create(
                 post=self.object,
                 author=request.user,
-                body=comment_body
+                body=comment_body,
+                parent=parent_comment
             )
             return redirect('post_detail', slug=self.object.slug)
         
