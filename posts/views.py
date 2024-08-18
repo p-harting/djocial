@@ -104,6 +104,9 @@ class AccountView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['is_own_account'] = self.request.user == self.get_object()
         
+        # Add the user's posts to the context
+        context['posts'] = Post.objects.filter(author=self.get_object()).order_by('-created_on')
+        
         if context['is_own_account']:
             context['email_form'] = forms.Form()  # Placeholder for the email form
             context['password_form'] = PasswordChangeForm(user=self.request.user)

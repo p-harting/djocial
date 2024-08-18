@@ -1,24 +1,42 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Hello, {{ user_account.username }}!</h1>
-    
-    {% if is_own_account %}
-        <form method="post">
-            {% csrf_token %}
-            
-            <!-- Email Update Section -->
-            <h3>Update Email</h3>
-            <input type="email" name="email" value="{{ user_account.email }}" placeholder="New email">
-            <button type="submit" name="email_form">Update Email</button>
-            
-            <!-- Password Update Section -->
-            <h3>Change Password</h3>
-            {{ password_form.as_p }}
-            <button type="submit" name="password_form">Change Password</button>
-            
-        </form>
-    {% else %}
-        <h2>This is the account of {{ user_account.username }}</h2>
-    {% endif %}
+<h1>{{ user_account.username }}</h1>
+
+{% if is_own_account %}
+<form method="post">
+    {% csrf_token %}
+
+    <!-- Email Update Section -->
+    <h3>Update Email</h3>
+    <input type="email" name="email" value="{{ user_account.email }}" placeholder="New email">
+    <button type="submit" name="email_form">Update Email</button>
+
+    <!-- Password Update Section -->
+    <h3>Change Password</h3>
+    {{ password_form.as_p }}
+    <button type="submit" name="password_form">Change Password</button>
+</form>
+{% else %}
+<h3>Follower:</h3>
+<h3>Following:</h3>
+<button class="btn btn-primary">Follow</button>
+{% endif %}
+
+<h2>Recent Posts:</h2>
+{% for post in posts %}
+    <div class="post no-underline-link">
+        <p><strong>Author:</strong> {{ post.author }} | <strong>Date:</strong> {{ post.created_on|date:"d M Y H:i" }}</p>
+        {% if post.image %}
+            <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width: 100%; height: auto;">
+        {% endif %}
+        <p>{{ post.content|safe|linebreaks }}</p>
+        <a href="{% url 'post_detail' post.slug %}">
+            <div>View post</div>
+        </a>
+    </div>
+    <hr>
+{% empty %}
+    <p>Nothing posted yet.</p>
+{% endfor %}
 {% endblock %}
