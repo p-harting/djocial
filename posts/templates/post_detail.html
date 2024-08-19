@@ -24,6 +24,9 @@
 </form>
 <p>{{ post.number_of_likes }} Likes</p>
 
+<!-- Report button -->
+<a href="{% url 'report_post' post.slug %}" class="btn btn-warning">Report</a>
+
 <hr>
 
 <!-- Comments Section -->

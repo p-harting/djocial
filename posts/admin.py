@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Comment, Follow
+from .models import Post, Comment, Follow, Report
 from django_summernote.admin import SummernoteModelAdmin
 
 @admin.register(Post)
@@ -22,3 +22,15 @@ class FollowAdmin(admin.ModelAdmin):
     search_fields = ['follower__username', 'following__username']
     list_filter = ('created_on',)
     ordering = ('created_on',)
+
+@admin.register(Report)
+class ReportAdmin(admin.ModelAdmin):
+    list_display = ('post', 'reporter', 'created_on', 'reviewed')
+    search_fields = ['post__slug', 'reporter__username']
+    list_filter = ('reviewed', 'created_on')
+    ordering = ('-created_on',)
+    actions = ['mark_as_reviewed']
+
+    def mark_as_reviewed(self, request, queryset):
+        queryset.update(reviewed=True)
+    mark_as_reviewed.short_description = "Als überprüft markieren"
