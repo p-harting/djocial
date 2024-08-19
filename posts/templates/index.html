@@ -17,7 +17,11 @@
 
 {% for post in posts %}
 <div class="post no-underline-link">
-  <p><strong>Author:</strong> {{ post.author }} | <strong>Date:</strong> {{ post.created_on|date:"d M Y H:i" }}</p>
+  <p><strong>Author:</strong>
+    <a href="{% url 'account' pk=post.author.pk %}">
+      {{ post.author }}
+    </a>
+    | <strong>Date:</strong> {{ post.created_on|date:"d M Y H:i" }}</p>
   <!--
       {% if post.image %}
         <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width: 100%; height: auto;">

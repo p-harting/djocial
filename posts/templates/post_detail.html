@@ -3,7 +3,11 @@
 
 {% block content %}
 <h1>{{ post.title }}</h1>
-<p><strong>Author:</strong> {{ post.author }} | <strong>Date:</strong> {{ post.created_on|date:"d M Y H:i" }}</p>
+<p><strong>Author:</strong>
+  <a href="{% url 'account' pk=post.author.pk %}">
+    {{ post.author }}
+  </a>
+  | <strong>Date:</strong> {{ post.created_on|date:"d M Y H:i" }}</p>
 
 <div>{{ post.content|linebreaks }}</div>
 
@@ -26,44 +30,53 @@
 <h2>Comments</h2>
 <div>
   {% for comment in top_level_comments %}
-    <div class="comment">
-      <p><strong>{{ comment.author }}</strong> - {{ comment.created_on|date:"d M Y H:i" }}</p>
-      <p>{{ comment.body|linebreaks }}</p>
-      <a href="#" class="reply-link" data-comment-id="{{ comment.id }}">Reply</a>
+  <div class="comment">
+    <p><strong>
+      <a href="{% url 'account' pk=comment.author.pk %}">
+        {{ comment.author }}
+      </a>
+    </strong> - {{ comment.created_on|date:"d M Y H:i" }}</p>
+    <p>{{ comment.body|linebreaks }}</p>
+    <a href="#" class="reply-link" data-comment-id="{{ comment.id }}">Reply</a>
 
-      <!-- Replies -->
-      {% for reply in comment.replies.all %}
-        <div class="reply" style="margin-left: 40px;">
-          <p><strong>{{ reply.author }}</strong> - {{ reply.created_on|date:"d M Y H:i" }}</p>
-          <p>{{ reply.body|linebreaks }}</p>
-        </div>
-      {% endfor %}
-      
-      <!-- Reply Form -->
-      <div id="reply-form-{{ comment.id }}" class="reply-form" style="display: none; margin-left: 40px;">
-        <form action="" method="post">
-          {% csrf_token %}
-          <input type="hidden" name="parent_id" value="{{ comment.id }}">
-          <textarea name="comment_body" rows="2" class="form-control" placeholder="Replying to {{ comment.author }}"></textarea>
-          <button type="submit" class="btn btn-primary mt-2">Submit Reply</button>
-        </form>
-      </div>
+    <!-- Replies -->
+    {% for reply in comment.replies.all %}
+    <div class="reply" style="margin-left: 40px;">
+      <p><strong>
+        <a href="{% url 'account' pk=reply.author.pk %}">
+          {{ reply.author }}
+        </a>
+      </strong> - {{ reply.created_on|date:"d M Y H:i" }}</p>
+      <p>{{ reply.body|linebreaks }}</p>
     </div>
+    {% endfor %}
+
+    <!-- Reply Form -->
+    <div id="reply-form-{{ comment.id }}" class="reply-form" style="display: none; margin-left: 40px;">
+      <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="parent_id" value="{{ comment.id }}">
+        <textarea name="comment_body" rows="2" class="form-control"
+          placeholder="Replying to {{ comment.author }}"></textarea>
+        <button type="submit" class="btn btn-primary mt-2">Submit Reply</button>
+      </form>
+    </div>
+  </div>
   {% empty %}
-    <p>No comments yet. Be the first to comment!</p>
+  <p>No comments yet. Be the first to comment!</p>
   {% endfor %}
 </div>
 
 <!-- Comment Form -->
 {% if user.is_authenticated %}
-  <h3>Leave a Comment</h3>
-  <form action="" method="post">
-    {% csrf_token %}
-    <textarea name="comment_body" rows="4" class="form-control" placeholder="Write your comment here..."></textarea>
-    <button type="submit" class="btn btn-primary mt-2">Submit</button>
-  </form>
+<h3>Leave a Comment</h3>
+<form action="" method="post">
+  {% csrf_token %}
+  <textarea name="comment_body" rows="4" class="form-control" placeholder="Write your comment here..."></textarea>
+  <button type="submit" class="btn btn-primary mt-2">Submit</button>
+</form>
 {% else %}
-  <p>You must be <a href="{% url 'login' %}">logged in</a> to comment.</p>
+<p>You must be <a href="{% url 'login' %}">logged in</a> to comment.</p>
 {% endif %}
 
 <script src="{% static 'js/comments.js' %}"></script>
