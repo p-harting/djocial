@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 from django.views.generic import DetailView
-from .models import Post, Comment, Follow
+from .models import Post, Comment, Follow, Report
 from django.shortcuts import redirect
 from django.views.generic.edit import FormView
 from django import forms
@@ -71,6 +71,32 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['content']
+
+class ReportForm(forms.ModelForm):
+    class Meta:
+        model = Report
+        fields = ['reason']
+        widgets = {
+            'reason': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Describe the reason for the report...'})
+        }
+
+@login_required
+def report_post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    
+    if request.method == 'POST':
+        form = ReportForm(request.POST)
+        if form.is_valid():
+            report = form.save(commit=False)
+            report.post = post
+            report.reporter = request.user
+            report.save()
+            messages.success(request, 'The post has been reported and is being reviewed.')
+            return redirect('post_detail', slug=slug)
+    else:
+        form = ReportForm()
+    
+    return render(request, 'report_form.html', {'form': form, 'post': post})
 
 class CreatePostView(FormView):
     form_class = PostForm
