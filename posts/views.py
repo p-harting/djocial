@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 from django.views.generic import DetailView
-from .models import Post, Comment
+from .models import Post, Comment, Follow
 from django.shortcuts import redirect
 from django.views.generic.edit import FormView
 from django import forms
@@ -92,6 +92,16 @@ def LikeView(request, slug):
         post.likes.add(request.user)
     return HttpResponseRedirect(reverse('post_detail', args=[slug]))
 
+@login_required
+def follow_toggle(request, pk):
+    user_to_follow = get_object_or_404(User, pk=pk)
+    follow_instance, created = Follow.objects.get_or_create(follower=request.user, following=user_to_follow)
+
+    if not created:
+        follow_instance.delete()
+
+    return redirect('account', pk=pk)
+
 class AccountView(LoginRequiredMixin, DetailView):
     model = User
     template_name = 'account.html'
@@ -104,13 +114,17 @@ class AccountView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['is_own_account'] = self.request.user == self.get_object()
         
-        # Add the user's posts to the context
         context['posts'] = Post.objects.filter(author=self.get_object()).order_by('-created_on')
         
         if context['is_own_account']:
             context['email_form'] = forms.Form()  # Placeholder for the email form
             context['password_form'] = PasswordChangeForm(user=self.request.user)
-        
+        else:
+            context['is_following'] = Follow.objects.filter(follower=self.request.user, following=self.get_object()).exists()
+
+        context['follower_count'] = self.get_object().followers.count()
+        context['following_count'] = self.get_object().following.count()
+
         return context
 
     def post(self, request, *args, **kwargs):
