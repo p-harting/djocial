@@ -66,3 +66,13 @@ class Follow(models.Model):
 
     def __str__(self):
         return f"{self.follower} follows {self.following}"
+
+class Report(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='reports')
+    reporter = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reports')
+    reason = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    reviewed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Report by {self.reporter} on {self.post.slug}"
