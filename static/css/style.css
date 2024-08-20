@@ -383,3 +383,140 @@ nav {
 .hidden {
     display: none;
 }
+
+/* Account page */
+.account-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #1F242A;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #FFFFFF;
+}
+
+.account-username {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #EEEEEE;
+}
+
+.form-title {
+    font-size: 18px;
+    margin-top: 20px;
+    color: #76ABAE;
+}
+
+.form-control {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    resize: none;
+}
+
+.btn-primary,
+.btn-danger {
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background-color: #76ABAE;
+    color: #FFFFFF;
+}
+
+.btn-primary:hover {
+    background-color: #4c7072;
+    transform: scale(1.05);
+}
+
+.btn-danger {
+    background-color: #FF4D4D;
+    color: #FFFFFF;
+}
+
+.btn-danger:hover {
+    background-color: #CC0000;
+    transform: scale(1.05);
+}
+
+.follow-info {
+    margin-bottom: 20px;
+}
+
+.follow-count {
+    font-size: 18px;
+    color: #76ABAE;
+}
+
+.recent-posts-title {
+    font-size: 24px;
+    margin-top: 40px;
+    color: #EEEEEE;
+}
+
+.post-container {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #1F242A;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #FFFFFF;
+    transition: transform 0.3s ease;
+}
+
+.post-container:hover {
+    transform: scale(1.02);
+}
+
+.post-header {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #B0B0B0;
+}
+
+.post-content {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.view-post-button {
+    background-color: #76ABAE;
+    color: #FFFFFF;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.view-post-button:hover {
+    background-color: #4c7072;
+    transform: scale(1.05);
+}
+
+.empty-state {
+    text-align: center;
+    color: #B0B0B0;
+    font-size: 18px;
+    margin-top: 20px;
+}
