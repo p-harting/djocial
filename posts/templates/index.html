@@ -3,7 +3,6 @@
 {% block content %}
 
 {% if user.is_authenticated %}
-
 <div class="post-form-container">
   <form method="post" action="{% url 'create_post' %}" class="post-form">
     {% csrf_token %}
@@ -14,29 +13,28 @@
     <button type="submit" class="btn-primary">Submit</button>
   </form>
 </div>
-
-<hr>
 {% endif %}
 
 {% for post in posts %}
-<div>
-  <p><strong>Author:</strong>
+<div class="post-container">
+  <p class="post-header">
+    <strong>Author:</strong>
     <a href="{% url 'account' pk=post.author.pk %}">
       {{ post.author }}
     </a>
-    | <strong>Date:</strong> {{ post.created_on|date:"d M Y H:i" }}</p>
-  <!--
-      {% if post.image %}
-        <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width: 100%; height: auto;">
-      {% endif %}
-      -->
-  <p>{{ post.content|safe|linebreaks }}</p>
-  <a href="{% url 'post_detail' post.slug %}">
-    <div>View post</div>
-  </a>
+    | <strong>Date:</strong> {{ post.created_on|date:"d M Y H:i" }}
+  </p>
+  <p class="post-content">{{ post.content|safe|linebreaks }}</p>
+  <div class="button-container">
+    <a class="view-post-button" href="{% url 'post_detail' post.slug %}">
+      View post
+    </a>
+  </div>
 </div>
-<hr>
 {% empty %}
-<p>Nothing posted yet.</p>
+<p class="empty-state">Nothing posted yet.</p>
 {% endfor %}
+
+
+
 {% endblock %}
