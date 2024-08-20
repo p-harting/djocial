@@ -203,3 +203,183 @@ nav {
     font-size: 18px;
     margin-top: 20px;
 }
+
+/* Post detail */
+.post-detail-container {
+    max-width: 800px; 
+    margin: 20px auto;
+    background-color: #1F242A;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #FFFFFF;
+}
+
+.post-title {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.post-header {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #B0B0B0; 
+}
+
+.post-header a {
+    color: #76ABAE;
+    text-decoration: none;
+}
+
+.post-header a:hover {
+    text-decoration: underline;
+}
+
+.post-content {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.like-form {
+    margin-bottom: 10px;
+}
+
+.btn-like {
+    background-color: #76ABAE;
+    color: #FFFFFF;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-like:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.btn-report {
+    display: inline-block;
+    background-color: #FF4D4D;
+    color: #FFFFFF;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-report:hover {
+    background-color: #CC0000;
+    transform: scale(1.05);
+}
+
+/* Comments section styling */
+.comments-title {
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+/* Comment styling */
+.comment, .reply {
+    background-color: #2A2D32;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.comment-header, .reply-header {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #B0B0B0;
+}
+
+.comment-body, .reply-body {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Reply link styling */
+.reply-link {
+    color: #76ABAE;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.reply-link:hover {
+    text-decoration: underline;
+}
+
+/* Reply form styling */
+.reply-form {
+    margin-top: 10px;
+}
+
+.reply-form .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.reply-form .btn-primary {
+    background-color: #76ABAE;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.reply-form .btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Comment form styling */
+.comment-form {
+    margin-top: 20px;
+}
+
+.comment-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.comment-form .btn-primary {
+    background-color: #76ABAE;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.comment-form .btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.empty-state {
+    text-align: center;
+    color: #B0B0B0;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+.auth-required {
+    font-size: 16px;
+}
+
+.hidden {
+    display: none;
+}
