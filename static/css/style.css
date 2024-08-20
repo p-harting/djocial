@@ -520,3 +520,44 @@ nav {
     font-size: 18px;
     margin-top: 20px;
 }
+
+/* Signout container styling */
+.signout-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #1F242A;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.signout-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #EEEEEE;
+}
+
+.signout-text {
+    font-size: 16px;
+    margin-bottom: 30px;
+    color: #B0B0B0;
+}
+
+.signout-form .btn-primary {
+    width: 100%;
+    background-color: #FF4D4D;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.signout-form .btn-primary:hover {
+    background-color: #CC0000;
+    transform: scale(1.05);
+}
