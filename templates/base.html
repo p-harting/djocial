@@ -27,6 +27,13 @@
   <nav class="navbar">
     <div class="navbar-container">
       <a class="navbar-logo" href="{% url 'home' %}">DJocial</a>
+      
+      <!-- Search Form -->
+      <form method="GET" action="{% url 'search_results' %}" class="search-form">
+        <input type="text" name="q" placeholder="Search..." class="search-input" required>
+        <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
+      </form>
+
       <div class="dropdown">
         <input type="checkbox" id="dropdown-toggle" class="dropdown-toggle" />
         <label for="dropdown-toggle" class="dropdown-btn">
@@ -47,6 +54,7 @@
     </div>
   </nav>
 </header>
+
 
   <div class="content">
     {% block content %}

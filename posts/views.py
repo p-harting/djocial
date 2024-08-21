@@ -226,3 +226,19 @@ class BioForm(forms.ModelForm):
         labels = {
             'bio': 'Bio'
         }
+
+def search_results(request):
+    query = request.GET.get('q')
+    if query:
+        users = User.objects.filter(username__icontains=query)
+        posts = Post.objects.filter(content__icontains=query)
+    else:
+        users = User.objects.none()
+        posts = Post.objects.none()
+
+    context = {
+        'query': query,
+        'users': users,
+        'posts': posts,
+    }
+    return render(request, 'search_results.html', context)

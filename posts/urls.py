@@ -12,4 +12,5 @@ urlpatterns = [
     path('account/<int:pk>', AccountView.as_view(), name='account'),
     path('follow_toggle/<int:pk>/', follow_toggle, name='follow_toggle'),
     path('report/<slug:slug>/', report_post, name='report_post'),
+    path('search/', views.search_results, name='search_results'),
 ]
