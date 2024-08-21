@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Comment, Follow, Report
+from .models import Post, Comment, Follow, Report, Profile
 from django_summernote.admin import SummernoteModelAdmin
 
 @admin.register(Post)
@@ -34,3 +34,9 @@ class ReportAdmin(admin.ModelAdmin):
     def mark_as_reviewed(self, request, queryset):
         queryset.update(reviewed=True)
     mark_as_reviewed.short_description = "Als überprüft markieren"
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'bio')
+    search_fields = ['user__username', 'bio']
+    list_filter = ('user',)

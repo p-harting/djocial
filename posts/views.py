@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 from django.views.generic import DetailView
-from .models import Post, Comment, Follow, Report
+from .models import Post, Comment, Follow, Report, Profile
 from django.shortcuts import redirect
 from django.views.generic.edit import FormView
 from django import forms
@@ -136,7 +136,10 @@ class AccountView(LoginRequiredMixin, DetailView):
     context_object_name = 'user_account'
 
     def get_object(self, queryset=None):
-        return User.objects.get(pk=self.kwargs['pk'])
+        user = User.objects.get(pk=self.kwargs['pk'])
+        # Ensure the profile exists
+        Profile.objects.get_or_create(user=user)
+        return user
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -147,6 +150,7 @@ class AccountView(LoginRequiredMixin, DetailView):
         if context['is_own_account']:
             context['email_form'] = forms.Form()  # Placeholder for the email form
             context['password_form'] = PasswordChangeForm(user=self.request.user)
+            context['bio_form'] = BioForm(instance=self.get_object().profile)
         else:
             context['is_following'] = Follow.objects.filter(follower=self.request.user, following=self.get_object()).exists()
 
@@ -179,10 +183,18 @@ class AccountView(LoginRequiredMixin, DetailView):
                 return redirect('account', pk=user.pk)
             else:
                 messages.error(request, 'Please correct the errors below.')
-        
+
+        elif 'bio_form' in request.POST:
+            bio_form = BioForm(request.POST, instance=request.user.profile)
+            if bio_form.is_valid():
+                bio_form.save()
+                messages.success(request, 'Your bio has been updated successfully!')
+                return redirect('account', pk=user.pk)
+
         context = self.get_context_data()
         context['email_form'] = forms.Form()  # Placeholder for the email form
         context['password_form'] = PasswordChangeForm(user=request.user, data=request.POST)
+        context['bio_form'] = BioForm(instance=request.user.profile)
         return render(request, self.template_name, context)
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
@@ -203,3 +215,14 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_queryset(self):
         return self.model.objects.filter(author=self.request.user)
+
+class BioForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['bio']
+        widgets = {
+            'bio': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Tell us about yourself...', 'maxlength': '300'})
+        }
+        labels = {
+            'bio': 'Bio'
+        }
