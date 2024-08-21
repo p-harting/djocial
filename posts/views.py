@@ -22,14 +22,34 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.core.paginator import Paginator
+from django.template.loader import render_to_string
+from django.http import JsonResponse
+
 
 class HomeView(TemplateView):
     template_name = 'index.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['posts'] = Post.objects.filter(status=1).order_by('-created_on')
+        page_number = self.request.GET.get('page', 1)
+        posts = Post.objects.filter(status=1).order_by('-created_on')
+        paginator = Paginator(posts, 7)  # Show 7 posts per page
+        page_obj = paginator.get_page(page_number)
+        context['posts'] = page_obj
+        context['is_paginated'] = page_obj.has_other_pages()
         return context
+
+    def get(self, request, *args, **kwargs):
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            page_number = request.GET.get('page', 1)
+            posts = Post.objects.filter(status=1).order_by('-created_on')
+            paginator = Paginator(posts, 7)
+            page_obj = paginator.get_page(page_number)
+            html = render_to_string('partials/post_list.html', {'posts': page_obj})
+            has_next = page_obj.has_next()
+            return JsonResponse({'html': html, 'has_next': has_next})
+        return super().get(request, *args, **kwargs)
 
 class PostDetailView(DetailView):
     model = Post

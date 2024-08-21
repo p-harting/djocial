@@ -1,40 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-
 {% if user.is_authenticated %}
 <div class="post-form-container">
   <form method="post" action="{% url 'create_post' %}" class="post-form">
     {% csrf_token %}
     <div class="mb-3">
-      <textarea id="postContent" name="content" class="form-control" rows="4" placeholder="What's new..."
-        required></textarea>
+      <textarea id="postContent" name="content" class="form-control" rows="4" placeholder="What's new..." required></textarea>
     </div>
     <button type="submit" class="btn-primary">Submit</button>
   </form>
 </div>
 {% endif %}
 
-{% for post in posts %}
-<div class="post-container">
-  <p class="post-header">
-    <strong>Author:</strong>
-    <a href="{% url 'account' pk=post.author.pk %}">
-      {{ post.author }}
-    </a>
-    | <strong>Date:</strong> {{ post.created_on|date:"d M Y H:i" }}
-  </p>
-  <p class="post-content">{{ post.content|safe|linebreaks }}</p>
-  <div class="button-container">
-    <a class="view-post-button" href="{% url 'post_detail' post.slug %}">
-      View post
-    </a>
-  </div>
+<div id="post-list">
+  {% include 'partials/post_list.html' %}
 </div>
-{% empty %}
-<p class="empty-state">Nothing posted yet.</p>
-{% endfor %}
 
+<div id="loading" style="display: none; text-align: center; padding: 20px;">
+  <i class="fa-solid fa-spinner fa-spin" style="font-size: 24px;"></i>
+  <p>Loading more posts...</p>
+</div>
+
+<div id="no-more-posts" style="display: none; text-align: center; padding: 20px;">
+  <p>No more posts to load.</p>
+</div>
 
 
 {% endblock %}
