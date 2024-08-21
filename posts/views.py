@@ -20,6 +20,8 @@ from django.contrib import messages
 from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.views.generic.edit import UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 class HomeView(TemplateView):
     template_name = 'index.html'
@@ -182,3 +184,22 @@ class AccountView(LoginRequiredMixin, DetailView):
         context['email_form'] = forms.Form()  # Placeholder for the email form
         context['password_form'] = PasswordChangeForm(user=request.user, data=request.POST)
         return render(request, self.template_name, context)
+
+class PostUpdateView(LoginRequiredMixin, UpdateView):
+    model = Post
+    fields = ['content', 'image']
+    template_name = 'edit_post.html'
+
+    def get_queryset(self):
+        return self.model.objects.filter(author=self.request.user)
+
+    def get_success_url(self):
+        return reverse_lazy('post_detail', kwargs={'slug': self.object.slug})
+
+class PostDeleteView(LoginRequiredMixin, DeleteView):
+    model = Post
+    template_name = 'delete_post.html'
+    success_url = reverse_lazy('home')
+
+    def get_queryset(self):
+        return self.model.objects.filter(author=self.request.user)

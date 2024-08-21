@@ -11,6 +11,18 @@
     </p>
     <div class="post-content">{{ post.content|linebreaks }}</div>
 
+    <!-- Edit and Delete buttons (only for the author) -->
+    {% if user == post.author %}
+    <div class="post-actions">
+        <a href="{% url 'edit_post' post.slug %}" class="btn btn-primary">Edit</a>
+        <form action="{% url 'delete_post' post.slug %}" method="POST" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger"
+                onclick="return confirm('Are you sure you want to delete this post?');">Delete</button>
+        </form>
+    </div>
+    {% endif %}
+
     <!-- Like button -->
     <form action="{% url 'like_post' post.slug %}" method="POST" class="like-form">
         {% csrf_token %}
@@ -54,13 +66,14 @@
 
             <!-- Reply Form -->
             <div id="reply-form-{{ comment.id }}" class="reply-form hidden">
-              <form action="" method="post">
-                  {% csrf_token %}
-                  <input type="hidden" name="parent_id" value="{{ comment.id }}">
-                  <textarea name="comment_body" rows="2" class="form-control" placeholder="Replying to {{ comment.author }}"></textarea>
-                  <button type="submit" class="btn-primary">Submit Reply</button>
-              </form>
-          </div>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                    <textarea name="comment_body" rows="2" class="form-control"
+                        placeholder="Replying to {{ comment.author }}"></textarea>
+                    <button type="submit" class="btn-primary">Submit Reply</button>
+                </form>
+            </div>
         </div>
         {% empty %}
         <p class="empty-state">No comments yet. Be the first to comment!</p>
