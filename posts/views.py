@@ -25,6 +25,9 @@ from django.urls import reverse_lazy
 from django.core.paginator import Paginator
 from django.template.loader import render_to_string
 from django.http import JsonResponse
+from django.utils import timezone
+from datetime import timedelta
+from django.db.models import Count
 
 
 class HomeView(TemplateView):
@@ -32,23 +35,42 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        feed_type = self.request.GET.get('feed', 'trending')
         page_number = self.request.GET.get('page', 1)
-        posts = Post.objects.filter(status=1).order_by('-created_on')
-        paginator = Paginator(posts, 7)  # Show 7 posts per page
+
+        if feed_type == 'followers' and self.request.user.is_authenticated:
+            following_users = Follow.objects.filter(follower=self.request.user).values_list('following', flat=True)
+            posts = Post.objects.filter(author__in=following_users, status=1).order_by('-created_on')
+        else:
+            seven_days_ago = timezone.now() - timedelta(days=7)
+            posts = Post.objects.filter(status=1, created_on__gte=seven_days_ago).annotate(num_likes=Count('likes')).order_by('-num_likes', '-created_on')
+
+        paginator = Paginator(posts, 7)
         page_obj = paginator.get_page(page_number)
+
         context['posts'] = page_obj
         context['is_paginated'] = page_obj.has_other_pages()
+        context['feed_type'] = feed_type
         return context
 
     def get(self, request, *args, **kwargs):
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             page_number = request.GET.get('page', 1)
-            posts = Post.objects.filter(status=1).order_by('-created_on')
+            feed_type = request.GET.get('feed', 'trending')
+
+            if feed_type == 'followers' and request.user.is_authenticated:
+                following_users = Follow.objects.filter(follower=request.user).values_list('following', flat=True)
+                posts = Post.objects.filter(author__in=following_users, status=1).order_by('-created_on')
+            else:
+                seven_days_ago = timezone.now() - timedelta(days=7)
+                posts = Post.objects.filter(status=1, created_on__gte=seven_days_ago).annotate(num_likes=Count('likes')).order_by('-num_likes', '-created_on')
+
             paginator = Paginator(posts, 7)
             page_obj = paginator.get_page(page_number)
             html = render_to_string('partials/post_list.html', {'posts': page_obj})
             has_next = page_obj.has_next()
             return JsonResponse({'html': html, 'has_next': has_next})
+
         return super().get(request, *args, **kwargs)
 
 class PostDetailView(DetailView):

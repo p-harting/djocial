@@ -1,6 +1,7 @@
 let page = 2; // Start loading from page 2, as page 1 is already loaded
 let loading = false;
 let noMorePosts = false;
+let feedType = new URLSearchParams(window.location.search).get('feed') || 'trending';
 
 window.addEventListener('scroll', () => {
   if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
@@ -12,7 +13,7 @@ window.addEventListener('scroll', () => {
 });
 
 function loadMorePosts() {
-  const url = `?page=${page}`;
+  const url = `?page=${page}&feed=${feedType}`;
   const loadingDiv = document.getElementById('loading');
   const noMorePostsDiv = document.getElementById('no-more-posts');
   loadingDiv.style.display = 'block';

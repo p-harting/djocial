@@ -13,6 +13,11 @@
 </div>
 {% endif %}
 
+<div class="feed-toggle">
+  <a href="{% url 'home' %}?feed=trending" class="toggle-btn {% if feed_type == 'trending' %}active{% endif %}">Trending</a>
+  <a href="{% url 'home' %}?feed=followers" class="toggle-btn {% if feed_type == 'followers' %}active{% endif %}">Only Followers</a>
+</div>
+
 <div id="post-list">
   {% include 'partials/post_list.html' %}
 </div>
@@ -25,6 +30,4 @@
 <div id="no-more-posts" style="display: none; text-align: center; padding: 20px;">
   <p>No more posts to load.</p>
 </div>
-
-
 {% endblock %}
