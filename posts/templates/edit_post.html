@@ -1,15 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- Header indicating the purpose of the page -->
-<h1>Edit Post</h1>
+<div class="edit-post-container">
+    <h1 class="page-title">Edit Post</h1>
 
-<!-- Form for editing the post -->
-<form method="post">
-    {% csrf_token %}
-    <!-- Render the form fields as paragraphs -->
-    {{ form.as_p }}
-    <!-- Submit button to save the changes made to the post -->
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-</form>
+    <!-- Form for editing the post -->
+    <form method="post" class="edit-post-form">
+        {% csrf_token %}
+        <!-- Render the form fields with appropriate styling -->
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+        <!-- Submit button to save the changes made to the post -->
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
 {% endblock %}
