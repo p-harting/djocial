@@ -812,3 +812,64 @@ nav {
     color: #fff;
   }
   
+  /* Search results container styling */
+.search-results-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #1F242A;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #FFFFFF;
+}
+
+.search-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #EEEEEE;
+    text-align: center;
+}
+
+.search-section {
+    margin-bottom: 30px;
+}
+
+.section-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #76ABAE;
+}
+
+.search-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.search-item {
+    background-color: #2A2D32;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.search-link {
+    color: #76ABAE;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.search-link:hover {
+    text-decoration: underline;
+}
+
+.post-meta {
+    font-size: 14px;
+    color: #B0B0B0;
+}
+
+.no-results {
+    text-align: center;
+    color: #B0B0B0;
+    font-size: 16px;
+}

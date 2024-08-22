@@ -3,36 +3,44 @@
 {% block content %}
 <div class="search-results-container">
     <!-- Display the search query that was used -->
-    <h1>Search Results for "{{ query }}"</h1>
+    <h1 class="search-title">Search Results for "{{ query }}"</h1>
 
     <!-- Section for displaying user search results -->
-    <h2>Users</h2>
-    <ul>
-        <!-- Loop through the list of users found in the search -->
-        {% for user in users %}
-        <!-- Link to the user's profile page -->
-        <li><a href="{% url 'account' user.id %}">{{ user.username }}</a></li>
-        {% empty %}
-        <!-- Message if no users were found matching the query -->
-        <li>No users found.</li>
-        {% endfor %}
-    </ul>
+    <section class="search-section">
+        <h2 class="section-title">Users</h2>
+        <ul class="search-list">
+            <!-- Loop through the list of users found in the search -->
+            {% for user in users %}
+            <!-- Link to the user's profile page -->
+            <li class="search-item">
+                <a href="{% url 'account' user.id %}" class="search-link">{{ user.username }}</a>
+            </li>
+            {% empty %}
+            <!-- Message if no users were found matching the query -->
+            <li class="search-item no-results">No users found.</li>
+            {% endfor %}
+        </ul>
+    </section>
 
     <!-- Section for displaying post search results -->
-    <h2>Posts</h2>
-    <ul>
-        <!-- Loop through the list of posts found in the search -->
-        {% for post in posts %}
-        <li>
-            <!-- Link to the post detail page, showing a truncated preview of the content -->
-            <a href="{% url 'post_detail' post.slug %}">{{ post.content|truncatewords:10 }}</a>
-            <!-- Display the author and creation date of the post -->
-            <p><strong>By:</strong> {{ post.author.username }} | <strong>Date:</strong> {{ post.created_on|date:"d M Y" }}</p>
-        </li>
-        {% empty %}
-        <!-- Message if no posts were found matching the query -->
-        <li>No posts found.</li>
-        {% endfor %}
-    </ul>
+    <section class="search-section">
+        <h2 class="section-title">Posts</h2>
+        <ul class="search-list">
+            <!-- Loop through the list of posts found in the search -->
+            {% for post in posts %}
+            <li class="search-item">
+                <!-- Link to the post detail page, showing a truncated preview of the content -->
+                <a href="{% url 'post_detail' post.slug %}" class="search-link">{{ post.content|truncatewords:10 }}</a>
+                <!-- Display the author and creation date of the post -->
+                <p class="post-meta">
+                    <strong>By:</strong> {{ post.author.username }} | <strong>Date:</strong> {{ post.created_on|date:"d M Y" }}
+                </p>
+            </li>
+            {% empty %}
+            <!-- Message if no posts were found matching the query -->
+            <li class="search-item no-results">No posts found.</li>
+            {% endfor %}
+        </ul>
+    </section>
 </div>
 {% endblock %}
