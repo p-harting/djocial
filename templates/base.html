@@ -1,7 +1,3 @@
-{% url 'account_login' as login_url %}
-{% url 'account_signup' as signup_url %}
-{% url 'account_logout' as logout_url %}
-
 <!doctype html>
 <html lang="en">
 
@@ -36,10 +32,12 @@
       <a class="navbar-logo" href="{% url 'home' %}">DJocial</a>
       
       <!-- Search form for searching content on the site -->
-      <form method="GET" action="{% url 'search_results' %}" class="search-form">
-        <input type="text" name="q" placeholder="Search..." class="search-input" required>
-        <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
-      </form>
+      <div class="search-container">
+        <form method="GET" action="{% url 'search_results' %}" class="search-form">
+          <input type="text" name="q" placeholder="Search..." class="search-input" required>
+          <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
+        </form>
+      </div>
 
       <!-- Dropdown menu for user account actions -->
       <div class="dropdown">
