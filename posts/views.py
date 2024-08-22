@@ -1,36 +1,25 @@
-from django.views.generic import TemplateView
-from django.views.generic import DetailView
-from .models import Post, Comment, Follow, Report, Profile
-from django.shortcuts import redirect
-from django.views.generic.edit import FormView
-from django import forms
-from django.shortcuts import get_object_or_404
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
-from django import forms
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import PasswordChangeForm
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.views.generic import DetailView
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
+from django.views.generic import TemplateView, DetailView, FormView
 from django.views.generic.edit import UpdateView, DeleteView
-from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseRedirect, JsonResponse
+from django.urls import reverse, reverse_lazy
+from django.contrib import messages
+from django.contrib.auth.models import User
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.core.paginator import Paginator
 from django.template.loader import render_to_string
-from django.http import JsonResponse
 from django.utils import timezone
-from datetime import timedelta
 from django.db.models import Count
+from django import forms
+from datetime import timedelta
 
+from .models import Post, Comment, Follow, Report, Profile
 
 class HomeView(TemplateView):
+    # Homepage view, accessible to all users
     template_name = 'index.html'
 
     def get_context_data(self, **kwargs):
@@ -38,6 +27,7 @@ class HomeView(TemplateView):
         feed_type = self.request.GET.get('feed', 'trending')
         page_number = self.request.GET.get('page', 1)
 
+        # Filter posts based on feed type
         if feed_type == 'followers' and self.request.user.is_authenticated:
             following_users = Follow.objects.filter(follower=self.request.user).values_list('following', flat=True)
             posts = Post.objects.filter(author__in=following_users, status=1).order_by('-created_on')
@@ -54,6 +44,7 @@ class HomeView(TemplateView):
         return context
 
     def get(self, request, *args, **kwargs):
+        # Handle AJAX requests for infinite scrolling
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             page_number = request.GET.get('page', 1)
             feed_type = request.GET.get('feed', 'trending')
@@ -73,20 +64,22 @@ class HomeView(TemplateView):
 
         return super().get(request, *args, **kwargs)
 
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
+    # View for individual post details
     model = Post
     template_name = 'post_detail.html'
     context_object_name = 'post'
     slug_field = 'slug'
     slug_url_kwarg = 'slug'
+    login_url = '/accounts/login/'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Get top-level comments (those without a parent)
         context['top_level_comments'] = self.object.comments.filter(parent__isnull=True)
         return context
 
     def post(self, request, *args, **kwargs):
+        # Handle comment submission
         self.object = self.get_object()
         comment_body = request.POST.get('comment_body')
         parent_id = request.POST.get('parent_id')
@@ -107,10 +100,6 @@ class PostDetailView(DetailView):
         context = self.get_context_data()
         return self.render_to_response(context)
 
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
-
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
@@ -124,8 +113,9 @@ class ReportForm(forms.ModelForm):
             'reason': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Describe the reason for the report...'})
         }
 
-@login_required
+@login_required(login_url='/accounts/login/')
 def report_post(request, slug):
+    # View for reporting a post
     post = get_object_or_404(Post, slug=slug)
     
     if request.method == 'POST':
@@ -142,10 +132,12 @@ def report_post(request, slug):
     
     return render(request, 'report_form.html', {'form': form, 'post': post})
 
-class CreatePostView(FormView):
+class CreatePostView(LoginRequiredMixin, FormView):
+    # View for creating a new post
     form_class = PostForm
     template_name = 'index.html'
     success_url = '/'
+    login_url = '/accounts/login/'
 
     def form_valid(self, form):
         post = form.save(commit=False)
@@ -155,6 +147,7 @@ class CreatePostView(FormView):
 
 @login_required(login_url='/accounts/login/')
 def LikeView(request, slug):
+    # View for liking/unliking a post
     post = get_object_or_404(Post, slug=slug)
     if request.user in post.likes.all():
         post.likes.remove(request.user)
@@ -162,8 +155,9 @@ def LikeView(request, slug):
         post.likes.add(request.user)
     return HttpResponseRedirect(reverse('post_detail', args=[slug]))
 
-@login_required
+@login_required(login_url='/accounts/login/')
 def follow_toggle(request, pk):
+    # View for following/unfollowing a user
     user_to_follow = get_object_or_404(User, pk=pk)
     follow_instance, created = Follow.objects.get_or_create(follower=request.user, following=user_to_follow)
 
@@ -173,13 +167,14 @@ def follow_toggle(request, pk):
     return redirect('account', pk=pk)
 
 class AccountView(LoginRequiredMixin, DetailView):
+    # View for user account details
     model = User
     template_name = 'account.html'
     context_object_name = 'user_account'
+    login_url = '/accounts/login/'
 
     def get_object(self, queryset=None):
         user = User.objects.get(pk=self.kwargs['pk'])
-        # Ensure the profile exists
         Profile.objects.get_or_create(user=user)
         return user
 
@@ -190,7 +185,7 @@ class AccountView(LoginRequiredMixin, DetailView):
         context['posts'] = Post.objects.filter(author=self.get_object()).order_by('-created_on')
         
         if context['is_own_account']:
-            context['email_form'] = forms.Form()  # Placeholder for the email form
+            context['email_form'] = forms.Form()
             context['password_form'] = PasswordChangeForm(user=self.request.user)
             context['bio_form'] = BioForm(instance=self.get_object().profile)
         else:
@@ -202,9 +197,10 @@ class AccountView(LoginRequiredMixin, DetailView):
         return context
 
     def post(self, request, *args, **kwargs):
+        # Handle account updates
         user = self.get_object()
         if request.user != user:
-            return redirect('home')  # Prevent users from updating others' accounts
+            return redirect('home')
 
         if 'email_form' in request.POST:
             email = request.POST.get('email')
@@ -220,7 +216,7 @@ class AccountView(LoginRequiredMixin, DetailView):
             password_form = PasswordChangeForm(user=request.user, data=request.POST)
             if password_form.is_valid():
                 user = password_form.save()
-                update_session_auth_hash(request, user)  # Important to keep the user logged in after password change
+                update_session_auth_hash(request, user)
                 messages.success(request, 'Your password has been updated successfully!')
                 return redirect('account', pk=user.pk)
             else:
@@ -234,15 +230,17 @@ class AccountView(LoginRequiredMixin, DetailView):
                 return redirect('account', pk=user.pk)
 
         context = self.get_context_data()
-        context['email_form'] = forms.Form()  # Placeholder for the email form
+        context['email_form'] = forms.Form()
         context['password_form'] = PasswordChangeForm(user=request.user, data=request.POST)
         context['bio_form'] = BioForm(instance=request.user.profile)
         return render(request, self.template_name, context)
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
+    # View for updating a post
     model = Post
     fields = ['content', 'image']
     template_name = 'edit_post.html'
+    login_url = '/accounts/login/'
 
     def get_queryset(self):
         return self.model.objects.filter(author=self.request.user)
@@ -251,9 +249,11 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
         return reverse_lazy('post_detail', kwargs={'slug': self.object.slug})
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):
+    # View for deleting a post
     model = Post
     template_name = 'delete_post.html'
     success_url = reverse_lazy('home')
+    login_url = '/accounts/login/'
 
     def get_queryset(self):
         return self.model.objects.filter(author=self.request.user)
@@ -269,7 +269,9 @@ class BioForm(forms.ModelForm):
             'bio': 'Bio'
         }
 
+@login_required(login_url='/accounts/login/')
 def search_results(request):
+    # View for search results
     query = request.GET.get('q')
     if query:
         users = User.objects.filter(username__icontains=query)
