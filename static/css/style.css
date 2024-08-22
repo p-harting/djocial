@@ -694,36 +694,38 @@ nav {
 
 /* Feed toggle styling */
 .feed-toggle {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-    background-color: #222831;
-    border-radius: 12px;
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.toggle-btn {
-    flex: 1;
     text-align: center;
+    margin: 20px 0;
+  }
+  
+  .feed-toggle a {
+    display: inline-block;
     padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #FFFFFF;
-    background-color: #393E46;
-    text-decoration: none;
-    transition: background-color 0.3s, transform 0.3s;
     margin: 0 5px;
-}
-
-.toggle-btn:hover {
-    background-color: #4c7072;
-    transform: scale(1.05);
-}
-
-.toggle-btn.active {
-    background-color: #76ABAE;
-    color: #FFFFFF;
-    transform: scale(1.05);
-}
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #e7e9f5;
+    background: #26292c;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+  }
+  
+  .feed-toggle a.active {
+    background: linear-gradient(90deg, #4c7072, #76ABAE);
+    color: #fff;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .feed-toggle a:hover {
+    background: #333;
+    color: #ddd;
+  }
+  
+  .feed-toggle a:active {
+    background: linear-gradient(90deg, #76ABAE, #4c7072);
+    color: #fff;
+  }
+  
