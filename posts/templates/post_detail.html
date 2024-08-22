@@ -3,30 +3,40 @@
 
 {% block content %}
 <div class="post-detail-container">
+    <!-- Display the title of the post -->
     <h1 class="post-title">{{ post.title }}</h1>
+
+    <!-- Post metadata: author and creation date -->
     <p class="post-header">
         <strong>Author:</strong>
+        <!-- Link to the author's profile -->
         <a href="{% url 'account' pk=post.author.pk %}">{{ post.author }}</a>
         | <strong>Date:</strong> {{ post.created_on|date:"d M Y H:i" }}
     </p>
+
+    <!-- Display the content of the post, preserving line breaks -->
     <div class="post-content">{{ post.content|linebreaks }}</div>
 
-    <!-- Edit and Delete buttons (only for the author) -->
+    <!-- Edit and Delete buttons (only visible to the author of the post) -->
     {% if user == post.author %}
     <div class="post-actions">
+        <!-- Link to edit the post -->
         <a href="{% url 'edit_post' post.slug %}" class="btn btn-primary">Edit</a>
+        <!-- Form to delete the post -->
         <form action="{% url 'delete_post' post.slug %}" method="POST" style="display:inline;">
             {% csrf_token %}
+            <!-- Button to delete the post with a confirmation prompt -->
             <button type="submit" class="btn btn-danger"
                 onclick="return confirm('Are you sure you want to delete this post?');">Delete</button>
         </form>
     </div>
     {% endif %}
 
-    <!-- Like button -->
+    <!-- Like button for liking/unliking the post -->
     <form action="{% url 'like_post' post.slug %}" method="POST" class="like-form">
         {% csrf_token %}
         <button type="submit" class="btn-like">
+            <!-- Toggle button text based on whether the user has liked the post -->
             {% if user in post.likes.all %}
             Unlike
             {% else %}
@@ -34,64 +44,81 @@
             {% endif %}
         </button>
     </form>
+    <!-- Display the total number of likes -->
     <p class="likes-count">{{ post.number_of_likes }} Likes</p>
 
-    <!-- Report button -->
+    <!-- Button to report the post -->
     <a href="{% url 'report_post' post.slug %}" class="btn-report">Report</a>
 
     <!-- Comments Section -->
     <h2 class="comments-title">Comments</h2>
     <div class="comments-section">
+        <!-- Loop through top-level comments -->
         {% for comment in top_level_comments %}
         <div class="comment">
+            <!-- Comment metadata: author and creation date -->
             <p class="comment-header">
                 <strong>
+                    <!-- Link to the comment author's profile -->
                     <a href="{% url 'account' pk=comment.author.pk %}">{{ comment.author }}</a>
                 </strong> - {{ comment.created_on|date:"d M Y H:i" }}
             </p>
+            <!-- Display the comment body, preserving line breaks -->
             <p class="comment-body">{{ comment.body|linebreaks }}</p>
+            <!-- Link to reply to the comment -->
             <a href="#" class="reply-link" data-comment-id="{{ comment.id }}">Reply</a>
 
-            <!-- Replies -->
+            <!-- Display replies to the comment -->
             {% for reply in comment.replies.all %}
             <div class="reply">
+                <!-- Reply metadata: author and creation date -->
                 <p class="reply-header">
                     <strong>
+                        <!-- Link to the reply author's profile -->
                         <a href="{% url 'account' pk=reply.author.pk %}">{{ reply.author }}</a>
                     </strong> - {{ reply.created_on|date:"d M Y H:i" }}
                 </p>
+                <!-- Display the reply body, preserving line breaks -->
                 <p class="reply-body">{{ reply.body|linebreaks }}</p>
             </div>
             {% endfor %}
 
-            <!-- Reply Form -->
+            <!-- Reply form (initially hidden) -->
             <div id="reply-form-{{ comment.id }}" class="reply-form hidden">
                 <form action="" method="post">
                     {% csrf_token %}
+                    <!-- Hidden field to store the parent comment ID -->
                     <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                    <!-- Textarea for the reply content -->
                     <textarea name="comment_body" rows="2" class="form-control"
                         placeholder="Replying to {{ comment.author }}"></textarea>
+                    <!-- Button to submit the reply -->
                     <button type="submit" class="btn-primary">Submit Reply</button>
                 </form>
             </div>
         </div>
         {% empty %}
+        <!-- Message displayed if there are no comments -->
         <p class="empty-state">No comments yet. Be the first to comment!</p>
         {% endfor %}
     </div>
 
-    <!-- Comment Form -->
+    <!-- Comment form for authenticated users -->
     {% if user.is_authenticated %}
     <h3 class="comment-form-title">Leave a Comment</h3>
     <form action="" method="post" class="comment-form">
         {% csrf_token %}
+        <!-- Textarea for the comment content -->
         <textarea name="comment_body" rows="4" class="form-control" placeholder="Write your comment here..."></textarea>
+        <!-- Button to submit the comment -->
         <button type="submit" class="btn-primary">Submit</button>
     </form>
     {% else %}
+    <!-- Message prompting the user to log in to comment -->
     <p class="auth-required">You must be <a href="{% url 'login' %}">logged in</a> to comment.</p>
     {% endif %}
 </div>
 
+<!-- Load external JavaScript for comment interactions (e.g., reply handling) -->
 <script src="{% static 'js/comments.js' %}"></script>
 {% endblock %}

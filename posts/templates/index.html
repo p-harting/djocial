@@ -1,33 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% if user.is_authenticated %}
-<div class="post-form-container">
-  <form method="post" action="{% url 'create_post' %}" class="post-form">
-    {% csrf_token %}
-    <div class="mb-3">
-      <textarea id="postContent" name="content" class="form-control" rows="4" placeholder="What's new..." required></textarea>
+    {% if user.is_authenticated %}
+    <!-- Post creation form, displayed only if the user is authenticated -->
+    <div class="post-form-container">
+        <form method="post" action="{% url 'create_post' %}" class="post-form">
+            {% csrf_token %}
+            <!-- Textarea for creating a new post -->
+            <div class="mb-3">
+                <textarea id="postContent" name="content" class="form-control" rows="4" placeholder="What's new..." required></textarea>
+            </div>
+            <!-- Submit button for the post form -->
+            <button type="submit" class="btn-primary">Submit</button>
+        </form>
     </div>
-    <button type="submit" class="btn-primary">Submit</button>
-  </form>
-</div>
-{% endif %}
+    {% endif %}
 
-<div class="feed-toggle">
-  <a href="{% url 'home' %}?feed=trending" class="toggle-btn {% if feed_type == 'trending' %}active{% endif %}">Trending</a>
-  <a href="{% url 'home' %}?feed=followers" class="toggle-btn {% if feed_type == 'followers' %}active{% endif %}">Only Followers</a>
-</div>
+    <!-- Feed toggle buttons to switch between 'Trending' and 'Only Followers' posts -->
+    <div class="feed-toggle">
+        <a href="{% url 'home' %}?feed=trending" class="toggle-btn {% if feed_type == 'trending' %}active{% endif %}">Trending</a>
+        <a href="{% url 'home' %}?feed=followers" class="toggle-btn {% if feed_type == 'followers' %}active{% endif %}">Only Followers</a>
+    </div>
 
-<div id="post-list">
-  {% include 'partials/post_list.html' %}
-</div>
+    <!-- Container for loading the list of posts -->
+    <div id="post-list">
+        <!-- Includes a separate template for the list of posts -->
+        {% include 'partials/post_list.html' %}
+    </div>
 
-<div id="loading" style="display: none; text-align: center; padding: 20px;">
-  <i class="fa-solid fa-spinner fa-spin" style="font-size: 24px;"></i>
-  <p>Loading more posts...</p>
-</div>
+    <!-- Loading spinner displayed while posts are being fetched -->
+    <div id="loading" style="display: none; text-align: center; padding: 20px;">
+        <i class="fa-solid fa-spinner fa-spin" style="font-size: 24px;"></i>
+        <p>Loading more posts...</p>
+    </div>
 
-<div id="no-more-posts" style="display: none; text-align: center; padding: 20px;">
-  <p>No more posts to load.</p>
-</div>
+    <!-- Message displayed when there are no more posts to load -->
+    <div id="no-more-posts" style="display: none; text-align: center; padding: 20px;">
+        <p>No more posts to load.</p>
+    </div>
 {% endblock %}

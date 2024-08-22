@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Metadata for character encoding and viewport settings -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title of the page displayed in the browser tab -->
     <title>Report Post</title>
 </head>
 <body>
+    <!-- Header indicating the purpose of the page -->
     <h2>Report Post</h2>
+    
+    <!-- Inform the user which post they are reporting and who the author is -->
     <p>You are reporting the post of {{ post.author.username }}</p>
+    
+    <!-- Form for submitting the report -->
     <form method="post">
         {% csrf_token %}
+        <!-- Render the form fields as paragraphs -->
         {{ form.as_p }}
+        <!-- Submit button to report the post -->
         <button type="submit">Report</button>
     </form>
 </body>

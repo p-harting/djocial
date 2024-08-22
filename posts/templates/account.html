@@ -2,9 +2,10 @@
 
 {% block content %}
 <div class="account-container">
+    <!-- Display the username of the account -->
     <h1 class="account-username">{{ user_account.username }}</h1>
 
-    <!-- Display the bio for everyone -->
+    <!-- Display the bio if it exists; otherwise, show a default message -->
     {% if user_account.profile.bio %}
     <p class="user-bio">{{ user_account.profile.bio }}</p>
     {% else %}
@@ -12,39 +13,42 @@
     {% endif %}
 
     {% if is_own_account %}
-    <!-- Forms for updating email, password, and bio -->
+    <!-- If the user is viewing their own account, display forms to update account information -->
+
+    <!-- Form for updating the email address -->
     <form method="post" class="account-form">
         {% csrf_token %}
-
-        <!-- Email Update Section -->
         <h3 class="form-title">Update Email</h3>
         <input type="email" name="email" value="{{ user_account.email }}" placeholder="New email" class="form-control">
         <button type="submit" name="email_form" class="btn-primary">Update Email</button>
     </form>
 
+    <!-- Form for changing the password -->
     <form method="post" class="account-form">
         {% csrf_token %}
-
-        <!-- Password Update Section -->
         <h3 class="form-title">Change Password</h3>
         {{ password_form.as_p }}
         <button type="submit" name="password_form" class="btn-primary">Change Password</button>
     </form>
 
+    <!-- Form for updating the bio -->
     <form method="post" class="account-form">
         {% csrf_token %}
-
-        <!-- Bio Update Section -->
         <h3 class="form-title">Update Bio</h3>
         {{ bio_form.as_p }}
         <button type="submit" name="bio_form" class="btn-primary">Update Bio</button>
     </form>
+    
     {% else %}
+    <!-- If the user is viewing another account, display follow information -->
+
+    <!-- Display follower and following counts -->
     <div class="follow-info">
         <h3 class="follow-count">Follower: {{ follower_count }}</h3>
         <h3 class="follow-count">Following: {{ following_count }}</h3>
     </div>
 
+    <!-- Form for following or unfollowing the user -->
     <form method="post" action="{% url 'follow_toggle' user_account.pk %}" class="follow-form">
         {% csrf_token %}
         {% if is_following %}
@@ -55,16 +59,21 @@
     </form>
     {% endif %}
 
+    <!-- Display the recent posts of the user -->
     <h2 class="recent-posts-title">Recent Posts:</h2>
     {% for post in posts %}
     <div class="post-container no-underline-link">
+        <!-- Post metadata: author and creation date -->
         <p class="post-header"><strong>Author:</strong> {{ post.author }} | <strong>Date:</strong> {{ post.created_on|date:"d M Y H:i" }}</p>
+        <!-- Post content with line breaks preserved -->
         <p class="post-content">{{ post.content|safe|linebreaks }}</p>
+        <!-- Button to view the full post -->
         <div class="button-container">
             <a href="{% url 'post_detail' post.slug %}" class="view-post-button">View post</a>
         </div>
     </div>
     {% empty %}
+    <!-- Message displayed if the user has not posted anything yet -->
     <p class="empty-state">Nothing posted yet.</p>
     {% endfor %}
 </div>

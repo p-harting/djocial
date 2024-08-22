@@ -1,13 +1,19 @@
 {% for post in posts %}
 <div class="post-container">
+  <!-- Display the post's metadata: author and creation date -->
   <p class="post-header">
     <strong>Author:</strong>
+    <!-- Link to the author's profile page -->
     <a href="{% url 'account' pk=post.author.pk %}">
       {{ post.author }}
     </a>
     | <strong>Date:</strong> {{ post.created_on|date:"d M Y H:i" }}
   </p>
+
+  <!-- Display the content of the post, preserving formatting and line breaks -->
   <p class="post-content">{{ post.content|safe|linebreaks }}</p>
+
+  <!-- Button linking to the detailed view of the post -->
   <div class="button-container">
     <a class="view-post-button" href="{% url 'post_detail' post.slug %}">
       View post
@@ -15,5 +21,6 @@
   </div>
 </div>
 {% empty %}
+<!-- Message displayed if no posts are available -->
 <p class="empty-state">Nothing posted yet.</p>
 {% endfor %}
