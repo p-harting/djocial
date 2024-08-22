@@ -938,3 +938,73 @@ nav {
     transform: scale(1.05);
 }
 
+/* Report post container styling */
+.report-post-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #1F242A;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #FFFFFF;
+}
+
+.page-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #EEEEEE;
+    text-align: center;
+}
+
+.info-text {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #B0B0B0;
+    text-align: center;
+}
+
+/* Form styling */
+.report-post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group .form-control {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: #2A2D32;
+    color: #FFFFFF;
+    box-sizing: border-box;
+}
+
+.form-group .form-control::placeholder {
+    color: #a0a0a0;
+}
+
+.btn-danger {
+    background-color: #FF4D4D;
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-danger:hover {
+    background-color: #CC0000;
+    transform: scale(1.05);
+}
