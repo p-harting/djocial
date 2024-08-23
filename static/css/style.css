@@ -1025,3 +1025,7 @@ nav {
     box-sizing: border-box;
     overflow: hidden;
 }
+
+#charCount {
+    color: #FFFFFF;
+}
