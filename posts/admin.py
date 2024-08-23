@@ -4,17 +4,25 @@ from django_summernote.admin import SummernoteModelAdmin
 
 @admin.register(Post)
 class PostAdmin(SummernoteModelAdmin):
-    list_display = ('slug', 'status')
+    list_display = ('content_snippet', 'status', 'slug')
     search_fields = ['slug']
     list_filter = ('status',)
     summernote_fields = ('content',)
 
+    def content_snippet(self, obj):
+        return obj.content[:50] + '...' if len(obj.content) > 50 else obj.content
+    content_snippet.short_description = 'Content Snippet'
+
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('post', 'author', 'body', 'approved', 'created_on')
+    list_display = ('body_snippet', 'post', 'author', 'approved', 'created_on')
     search_fields = ['body', 'author__username', 'post__slug']
     list_filter = ('approved', 'created_on', 'post')
     ordering = ('created_on',)
+
+    def body_snippet(self, obj):
+        return obj.body[:50] + '...' if len(obj.body) > 50 else obj.body
+    body_snippet.short_description = 'Comment Snippet'
 
 @admin.register(Follow)
 class FollowAdmin(admin.ModelAdmin):
@@ -33,7 +41,7 @@ class ReportAdmin(admin.ModelAdmin):
 
     def mark_as_reviewed(self, request, queryset):
         queryset.update(reviewed=True)
-    mark_as_reviewed.short_description = "Als überprüft markieren"
+    mark_as_reviewed.short_description = "Mark as reviewed"
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
