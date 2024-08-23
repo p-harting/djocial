@@ -245,7 +245,7 @@ nav {
 }
 
 .post-header a {
-    color: #55DBE2;
+    color: #a6f9fd;
 }
 
 
@@ -267,7 +267,7 @@ nav {
 
 .view-post-button {
     background-color: #55DBE2;
-    color: #FFFFFF;
+    color: #000000;
     padding: 10px 15px;
     border-radius: 8px;
     text-decoration: none;
@@ -282,7 +282,7 @@ nav {
 
 .empty-state {
     text-align: center;
-    color: #55DBE2;
+    color: #a6f9fd;
     font-size: 18px;
     margin-top: 20px;
 }
@@ -306,11 +306,11 @@ nav {
 .post-header {
     font-size: 14px;
     margin-bottom: 10px;
-    color: #B0B0B0; 
+    color: #FFFFFF; 
 }
 
 .post-header a {
-    color: #55DBE2;
+    color: #FFFFFF;
     text-decoration: none;
 }
 
@@ -387,7 +387,7 @@ nav {
 
 /* Reply link styling */
 .reply-link {
-    color: #55DBE2;
+    color: #a6f9fd;
     text-decoration: none;
     font-size: 14px;
 }
@@ -487,7 +487,7 @@ nav {
 .form-title {
     font-size: 18px;
     margin-top: 20px;
-    color: #55DBE2;
+    color: #a6f9fd;
 }
 
 .form-control {
@@ -541,7 +541,7 @@ nav {
 
 .follow-count {
     font-size: 18px;
-    color: #55DBE2;
+    color: #a6f9fd;
 }
 
 .recent-posts-title {
@@ -731,7 +731,7 @@ nav {
 }
 
 .signup-text .link {
-    color: #55DBE2;
+    color: #a6f9fd;
     text-decoration: none;
 }
 
@@ -797,7 +797,7 @@ nav {
   }
   
   .feed-toggle a.active {
-    background: linear-gradient(90deg, #4c7072, #55DBE2);
+    background: linear-gradient(90deg, #4c7072, #a6f9fd);
     color: #fff;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
   }
@@ -808,7 +808,7 @@ nav {
   }
   
   .feed-toggle a:active {
-    background: linear-gradient(90deg, #55DBE2, #4c7072);
+    background: linear-gradient(90deg, #a6f9fd, #4c7072);
     color: #fff;
   }
   
@@ -837,7 +837,7 @@ nav {
 .section-title {
     font-size: 20px;
     margin-bottom: 10px;
-    color: #55DBE2;
+    color: #a6f9fd;
 }
 
 .search-list {
@@ -1024,4 +1024,8 @@ nav {
     text-align: center;
     box-sizing: border-box;
     overflow: hidden;
+}
+
+#charCount {
+    color: #FFFFFF;
 }
