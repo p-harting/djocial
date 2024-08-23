@@ -98,7 +98,11 @@ Overall, Djocial exemplifies the integration of modern web development practices
         -   "Only Followers" displays posts only from accounts the user follows.
         -   "Trending" shows posts that are currently popular across the platform.
   
- ## Wireframes
+## Wireframes
+| Page | Screenshot |
+|-----------|-----------|
+| index   | ![index](/assets/docs/wireframes/Home.png) |
+| post details   | ![index](/assets/docs/wireframes/Details.png) |
 
 ## Diagrams
 
