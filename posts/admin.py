@@ -5,7 +5,10 @@ from django_summernote.admin import SummernoteModelAdmin
 
 @admin.register(Post)
 class PostAdmin(SummernoteModelAdmin):
-    list_display = ('content_snippet', 'status', 'slug')
+    list_display = ('content_snippet',
+                    'status',
+                    'slug',
+                    'number_of_likes_display')
     search_fields = ['slug']
     list_filter = ('status',)
     summernote_fields = ('content',)
@@ -14,6 +17,10 @@ class PostAdmin(SummernoteModelAdmin):
         return obj.content[:50] + '...' if len(
             obj.content) > 50 else obj.content
     content_snippet.short_description = 'Content Snippet'
+
+    def number_of_likes_display(self, obj):
+        return obj.number_of_likes()
+    number_of_likes_display.short_description = 'Number of Likes'
 
 
 @admin.register(Comment)

@@ -26,7 +26,7 @@ class Post(models.Model):
     # Publishing status of the post
     status = models.IntegerField(choices=STATUS, default=1)
     # Users who liked the post
-    likes = models.ManyToManyField(User, related_name='post_like')
+    likes = models.ManyToManyField(User, related_name='post_like', blank=True)
 
     def save(self, *args, **kwargs):
         self.create_slug()
