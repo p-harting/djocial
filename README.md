@@ -410,3 +410,13 @@ To clone the Social App repository from GitHub:
 4.  Type `git clone` followed by the copied URL and press "Enter".
 
 ## Credits
+
+Special thanks to the following resources and creators who contributed to the development and understanding of this project:
+
+- **Code Institute**: For providing comprehensive Django training through the course "I Think Therefore I Blog." Their course materials and resources were instrumental in building the foundation for this project. [Code Institute](https://learn.codeinstitute.net/)
+
+- **Django Documentation**: The official Django documentation was an essential resource for understanding Django's features and best practices. [Django Docs](https://docs.djangoproject.com/en/5.1/)
+
+- **freeCodeCamp.org**: The tutorial "Build a Social Media App" on YouTube provided valuable insights into developing social media applications with Django. [Watch Tutorial](https://www.youtube.com/watch?v=xSUm6iMtREA)
+
+- **Codemy**: The series "Twitter With Django" on YouTube by Codemy offered practical guidance and coding examples for building a Twitter-like application with Django. [Watch Playlist](https://www.youtube.com/watch?v=KXunlJgeRcU&list=PLCC34OHNcOtoQCR6K4RgBWNi3-7yGgg7b)
