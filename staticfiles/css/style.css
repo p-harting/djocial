@@ -4,3 +4,1007 @@
     margin: 0;
     box-sizing: border-box;
 }
+
+body {
+    background-color: #31363F;
+}
+
+/* Navbar */
+header {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 20px;
+    background-color: #222831;
+    justify-content: space-between;
+    width: 100%;
+}
+
+nav {
+    width: 100%;
+}
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+.navbar-logo {
+    color: #EEEE;
+    text-decoration: none;
+    font-size: 30px;
+    margin-right: auto;
+}
+
+/* Search form styling */
+.search-form {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.search-input {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-right: 5px;
+}
+
+.search-button {
+    background: none;
+    border: none;
+    color: #EEEE;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.search-button i {
+    color: #EEEE;
+}
+
+@media (max-width: 768px) {
+    .search-form {
+        display: none;
+    }
+}
+
+.dropdown {
+    position: relative;
+    margin-left: auto;
+}
+
+.dropdown-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #EEEE;
+    font-size: 24px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: #222831;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.dropdown-content .dropdown-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown-content .dropdown-list li {
+    margin: 0;
+}
+
+.dropdown-content .dropdown-list li a {
+    color: #EEEE;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+}
+
+.dropdown-content .dropdown-list li a:hover {
+    background-color: #393E46;
+}
+
+.dropdown-toggle:checked~.dropdown-content {
+    display: block;
+}
+
+
+/* Hide the checkbox */
+.dropdown-toggle {
+    display: none;
+}
+
+.dropdown {
+    position: relative;
+    margin-left: auto;
+}
+
+.dropdown-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #EEEE;
+    font-size: 24px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: #222831;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.dropdown-content .dropdown-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown-content .dropdown-list li {
+    margin: 0;
+}
+
+.dropdown-content .dropdown-list li a {
+    color: #EEEE;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+}
+
+.dropdown-content .dropdown-list li a:hover {
+    background-color: #393E46;
+}
+
+.dropdown-toggle:checked~.dropdown-content {
+    display: block;
+}
+
+/* Post form */
+.post-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #31363F;
+}
+
+.post-form {
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.form-label {
+    display: none;
+}
+
+.form-control {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    resize: none;
+}
+
+.form-control::placeholder {
+    color: #a0a0a0;
+}
+
+.btn-primary {
+    background-color: #76ABAE;
+    border: none;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #4c7072;
+}
+
+/* Post container styling */
+.post-container {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #1F242A;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #FFFFFF;
+    transition: transform 0.3s ease;
+}
+
+.post-container:hover {
+    transform: scale(1.02);
+}
+
+/* Author and date styling */
+.post-header {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #B0B0B0;
+}
+
+.post-header a {
+    color: #4c7072;
+    text-decoration: none;
+}
+
+.post-header a:hover {
+    text-decoration: underline;
+}
+
+/* Post content styling */
+.post-content {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.view-post-button {
+    background-color: #76ABAE;
+    color: #FFFFFF;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.view-post-button:hover {
+    background-color: #4c7072;
+    transform: scale(1.05);
+}
+
+.empty-state {
+    text-align: center;
+    color: #76ABAE;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+/* Post detail */
+.post-detail-container {
+    max-width: 800px; 
+    margin: 20px auto;
+    background-color: #1F242A;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #FFFFFF;
+}
+
+.post-title {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.post-header {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #B0B0B0; 
+}
+
+.post-header a {
+    color: #76ABAE;
+    text-decoration: none;
+}
+
+.post-header a:hover {
+    text-decoration: underline;
+}
+
+.post-content {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.like-form {
+    margin-bottom: 10px;
+}
+
+.btn-like {
+    background-color: #76ABAE;
+    color: #FFFFFF;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-like:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.btn-report {
+    display: inline-block;
+    background-color: #FF4D4D;
+    color: #FFFFFF;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-report:hover {
+    background-color: #CC0000;
+    transform: scale(1.05);
+}
+
+/* Comments section styling */
+.comments-title {
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+/* Comment styling */
+.comment, .reply {
+    background-color: #2A2D32;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.comment-header, .reply-header {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #B0B0B0;
+}
+
+.comment-body, .reply-body {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Reply link styling */
+.reply-link {
+    color: #76ABAE;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.reply-link:hover {
+    text-decoration: underline;
+}
+
+/* Reply form styling */
+.reply-form {
+    margin-top: 10px;
+}
+
+.reply-form .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.reply-form .btn-primary {
+    background-color: #76ABAE;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.reply-form .btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Comment form styling */
+.comment-form {
+    margin-top: 20px;
+}
+
+.comment-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.comment-form .btn-primary {
+    background-color: #76ABAE;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.comment-form .btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.empty-state {
+    text-align: center;
+    color: #B0B0B0;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+.auth-required {
+    font-size: 16px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Account page */
+.account-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #1F242A;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #FFFFFF;
+}
+
+.account-username {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #EEEEEE;
+}
+
+.form-title {
+    font-size: 18px;
+    margin-top: 20px;
+    color: #76ABAE;
+}
+
+.form-control {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    resize: none;
+}
+
+.btn-primary,
+.btn-danger {
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background-color: #76ABAE;
+    color: #FFFFFF;
+}
+
+.btn-primary:hover {
+    background-color: #4c7072;
+    transform: scale(1.05);
+}
+
+.btn-danger {
+    background-color: #FF4D4D;
+    color: #FFFFFF;
+}
+
+.btn-danger:hover {
+    background-color: #CC0000;
+    transform: scale(1.05);
+}
+
+.follow-info {
+    margin-bottom: 20px;
+}
+
+.follow-count {
+    font-size: 18px;
+    color: #76ABAE;
+}
+
+.recent-posts-title {
+    font-size: 24px;
+    margin-top: 40px;
+    color: #EEEEEE;
+}
+
+.post-container {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #1F242A;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #FFFFFF;
+    transition: transform 0.3s ease;
+}
+
+.post-container:hover {
+    transform: scale(1.02);
+}
+
+.post-header {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #B0B0B0;
+}
+
+.post-content {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.view-post-button {
+    background-color: #76ABAE;
+    color: #FFFFFF;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.view-post-button:hover {
+    background-color: #4c7072;
+    transform: scale(1.05);
+}
+
+.empty-state {
+    text-align: center;
+    color: #B0B0B0;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+/* Signout container styling */
+.signout-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #1F242A;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.signout-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #EEEEEE;
+}
+
+.signout-text {
+    font-size: 16px;
+    margin-bottom: 30px;
+    color: #B0B0B0;
+}
+
+.signout-form .btn-primary {
+    width: 100%;
+    background-color: #FF4D4D;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.signout-form .btn-primary:hover {
+    background-color: #CC0000;
+    transform: scale(1.05);
+}
+
+/* Login container styling */
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #1F242A;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.login-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #EEEEEE;
+}
+
+.login-form .form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.login-label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: #B0B0B0;
+}
+
+.login-form .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #2A2D32;
+    color: #FFFFFF;
+}
+
+.login-form .form-control::placeholder {
+    color: #a0a0a0;
+}
+
+.login-form .btn-primary {
+    width: 100%;
+    background-color: #76ABAE;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.login-form .btn-primary:hover {
+    background-color: #4c7072;
+    transform: scale(1.05);
+}
+
+/* Signup container styling */
+.signup-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #1F242A;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.signup-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #EEEEEE;
+}
+
+.signup-text {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #B0B0B0;
+}
+
+.signup-text .link {
+    color: #76ABAE;
+    text-decoration: none;
+}
+
+.signup-text .link:hover {
+    text-decoration: underline;
+}
+
+.signup-form .form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.signup-form .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #2A2D32;
+    color: #FFFFFF;
+}
+
+.signup-form .form-control::placeholder {
+    color: #a0a0a0;
+}
+
+.signup-form .btn-primary {
+    width: 100%;
+    background-color: #76ABAE;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.signup-form .btn-primary:hover {
+    background-color: #4c7072;
+    transform: scale(1.05);
+}
+
+/* Feed toggle styling */
+.feed-toggle {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .feed-toggle a {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 0 5px;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #e7e9f5;
+    background: #26292c;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+  }
+  
+  .feed-toggle a.active {
+    background: linear-gradient(90deg, #4c7072, #76ABAE);
+    color: #fff;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .feed-toggle a:hover {
+    background: #333;
+    color: #ddd;
+  }
+  
+  .feed-toggle a:active {
+    background: linear-gradient(90deg, #76ABAE, #4c7072);
+    color: #fff;
+  }
+  
+  /* Search results container styling */
+.search-results-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #1F242A;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #FFFFFF;
+}
+
+.search-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #EEEEEE;
+    text-align: center;
+}
+
+.search-section {
+    margin-bottom: 30px;
+}
+
+.section-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #76ABAE;
+}
+
+.search-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.search-item {
+    background-color: #2A2D32;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.search-link {
+    color: #76ABAE;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.search-link:hover {
+    text-decoration: underline;
+}
+
+.post-meta {
+    font-size: 14px;
+    color: #B0B0B0;
+}
+
+.no-results {
+    text-align: center;
+    color: #B0B0B0;
+    font-size: 16px;
+}
+
+/* Edit post container styling */
+.edit-post-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #1F242A;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #FFFFFF;
+}
+
+.page-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #EEEEEE;
+    text-align: center;
+}
+
+/* Form styling */
+.edit-post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group .form-control {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: #2A2D32;
+    color: #FFFFFF;
+    box-sizing: border-box;
+}
+
+.form-group .form-control::placeholder {
+    color: #a0a0a0;
+}
+
+.btn-primary {
+    background-color: #76ABAE;
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-primary:hover {
+    background-color: #4c7072;
+    transform: scale(1.05);
+}
+
+/* Report post container styling */
+.report-post-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #1F242A;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #FFFFFF;
+}
+
+.page-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #EEEEEE;
+    text-align: center;
+}
+
+.info-text {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #B0B0B0;
+    text-align: center;
+}
+
+/* Form styling */
+.report-post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group .form-control {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: #2A2D32;
+    color: #FFFFFF;
+    box-sizing: border-box;
+}
+
+.form-group .form-control::placeholder {
+    color: #a0a0a0;
+}
+
+.btn-danger {
+    background-color: #FF4D4D;
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-danger:hover {
+    background-color: #CC0000;
+    transform: scale(1.05);
+}
