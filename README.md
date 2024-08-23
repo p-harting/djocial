@@ -132,6 +132,126 @@ Overall, Djocial exemplifies the integration of modern web development practices
 -   **whitenoise==6.7.0**: Serves static files in a production environment, reducing the need for an external server.
 
 ## Testing
+### Code Validation
+
+#### HTML
+
+I used the [HTML W3C Validator](https://validator.w3.org) to ensure all HTML files are valid.
+
+| Directory | File      | Screenshot |
+|-----------|-----------|------------|
+| djocial   | index.html | ![index](assets/docs/testing/HTML/base.PNG) |
+
+#### CSS
+
+I used the [CSS Jigsaw Validator](https://jigsaw.w3.org/css-validator) to validate all CSS files.
+
+| Directory | File      | Screenshot |
+|-----------|-----------|------------| 
+| djocial   | style.css | ![style](assets/docs/testing/CSS/style.PNG) |
+
+#### JavaScript
+
+I validated all JS files using [JShint Validator](https://jshint.com).
+
+| Directory | File      | Screenshot |
+|-----------|-----------|------------|
+| djocial   | script.js | ![script](assets/docs/testing/Javascript/comments.PNG) |  
+
+#### Python
+
+I used [PEP8 CI Python Linter](https://pep8ci.herokuapp.com) to check all Python files.
+
+| File                | Screenshot |
+|---------------------|------------|
+| apps.py             | ![apps](assets/docs/testing/Python/admin.PNG) |
+| forms.py            | ![forms](assets/docs/testing/Python/models.PNG) |
+| models.py           | ![models](assets/docs/testing/Python/models.PNG) |
+| urls.py             | ![urls](assets/docs/testing/Python/urls.PNG) |
+| views.py            | ![views](assets/docs/testing/Python/views.PNG) |
+
+#### Lighthouse Audit
+
+The Lighthouse Audit tool was used to evaluate the deployed project's performance and other metrics.
+
+##### Desktop
+| Page               | Screenshot |
+|--------------------|------------|
+| Index              | ![index](assets/docs/testing/PageSpeed/index.PNG) | 
+
+### General Testing
+- All features were developed on the main branch.
+- Each feature addition was followed by comprehensive testing to ensure no functionality was affected.
+- The website was tested by friends and relatives for feedback.
+- Username inputs are validated to ensure correct information is submitted.
+- A `.gitignore` file is included to avoid committing system files.
+- External links are set to open in a new tab.
+
+### Feature Testing
+
+The following table details the manual testing of each feature implemented in **Social** to ensure they are functioning correctly:
+
+| Feature                                    | Description                                                                                                           | Test Result |
+|--------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|-------------|
+| View Full Post Content                     | Users can click on a post to view its full content and details.                                                        | Passed      |
+| User Registration and Authentication       | Users can register, log in, create posts, and interact with other users by commenting and liking posts.                | Passed      |
+| Create and Share Posts                     | Users can create and publish posts visible to all users, and posts can receive replies.                               | Passed      |
+| Like and Unlike Posts                      | Users can like and unlike posts, and the like count updates accordingly.                                               | Passed      |
+| Comment on Posts                           | Logged-in users can comment on posts, and others can reply to comments, allowing for conversation threads.            | Passed      |
+| Admin Post Management                      | Admins can create, read, update, and delete posts for content management purposes.                                    | Passed      |
+| Edit and Delete Personal Posts             | Users can modify or delete their own posts at any time.                                                                 | Passed      |
+| Profile Description                       | Users can add or edit a description in their profile settings, visible on their profile page, limited to 300 characters. | Passed      |
+| Search Functionality                      | Users can search for users and posts using a search bar, and results include matching profiles and posts.              | Passed      |
+| Infinite Scrolling                         | Users can scroll through posts infinitely, with more content loading automatically as they scroll.                      | Passed      |
+| Feed Customization                         | Users can switch between feed options like "Only Followers" and "Trending" to customize their content experience.       | Passed      |
+
+## Data Storage
+
+Djocial employs PostgreSQL for robust and scalable data management, and Cloudinary for handling images. Here's a detailed overview of how data is organized and utilized within Djocial:
+
+### User Information
+
+- The `User` model, provided by Django's built-in authentication system, handles essential user details including usernames, email addresses, and hashed passwords. This information is crucial for authenticating users and personalizing their experience on the platform.
+
+### Posts and Comments
+
+- The `Post` model manages blog-like content including the post's main text, associated images (stored in Cloudinary), and metadata like timestamps and publishing status. Users can interact with posts through likes and comments.
+- The `Comment` model facilitates user interaction by allowing users to comment on posts, reply to other comments, and manage comment approval.
+
+### User Relationships and Interaction
+
+- The `Follow` model tracks follow relationships between users, recording who is following whom and when this relationship was established. This model helps manage and display follower/following information on user profiles.
+- The `Report` model allows users to report posts for review. This includes storing the reason for the report and tracking whether the report has been reviewed.
+
+### User Profiles
+
+- The `Profile` model extends the `User` model to include additional user information, such as a short biography. Each user has a unique profile that can be updated with personal information.
+
+## Data Handling and Privacy
+
+### PostgreSQL Integration
+
+- Djocial utilizes PostgreSQL for data storage, ensuring efficient management and scalability. The integration with Django's ORM system facilitates seamless database operations and code maintainability.
+
+### Cloudinary for Media
+
+- Djocial leverages Cloudinary for handling image uploads and storage. This allows for efficient management of media files, including uploading, resizing, and optimizing images.
+
+### Data Privacy
+
+- Sensitive data, such as user passwords, are hashed using Django's built-in hashing mechanisms before storage. This ensures that even if the database is compromised, user passwords remain secure.
+
+### Real-Time Updates
+
+- User interactions, such as post likes and comments, are updated in real-time. This ensures users receive immediate feedback and their actions are reflected instantly across the platform.
+
+### Security Measures
+
+- Djocial employs Django's built-in security features to protect against common vulnerabilities. This includes protections against SQL injection, cross-site scripting (XSS), and cross-site request forgery (CSRF).
+
+### Static Files Management
+
+- Static files such as CSS, JavaScript, and images are managed and served efficiently. Cloudinary handles media files, while Django's static files handling ensures other assets are served optimally.
 
 ## Deployment
 
