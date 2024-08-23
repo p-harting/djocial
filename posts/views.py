@@ -101,6 +101,13 @@ class PostDetailView(LoginRequiredMixin, DetailView):
         return self.render_to_response(context)
 
 class PostForm(forms.ModelForm):
+    content = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 4, 'placeholder': "What's new...", 'maxlength': 350}),
+        max_length=350,  # Enforces 350 characters limit
+        required=True,
+        label=''
+    )
+
     class Meta:
         model = Post
         fields = ['content']

@@ -2,13 +2,13 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-    <!-- Post creation form, displayed only if the user is authenticated -->
     <div class="post-form-container">
         <form method="post" action="{% url 'create_post' %}" class="post-form">
             {% csrf_token %}
             <!-- Textarea for creating a new post -->
             <div class="mb-3">
-                <textarea id="postContent" name="content" class="form-control" rows="4" placeholder="What's new..." required></textarea>
+                <textarea id="postContent" name="content" class="form-control" rows="4" placeholder="What's new..." maxlength="350" required></textarea>
+                <small id="charCount" class="form-text text-muted">0/350 characters</small>
             </div>
             <!-- Submit button for the post form -->
             <button type="submit" class="btn-primary">Submit</button>
