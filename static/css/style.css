@@ -267,7 +267,7 @@ nav {
 
 .view-post-button {
     background-color: #55DBE2;
-    color: #FFFFFF;
+    color: #000000;
     padding: 10px 15px;
     border-radius: 8px;
     text-decoration: none;
@@ -306,11 +306,11 @@ nav {
 .post-header {
     font-size: 14px;
     margin-bottom: 10px;
-    color: #B0B0B0; 
+    color: #FFFFFF; 
 }
 
 .post-header a {
-    color: #a6f9fd;
+    color: #FFFFFF;
     text-decoration: none;
 }
 
