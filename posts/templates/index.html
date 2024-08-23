@@ -14,13 +14,12 @@
             <button type="submit" class="btn-primary">Submit</button>
         </form>
     </div>
-    {% endif %}
-
     <!-- Feed toggle buttons to switch between 'Trending' and 'Only Followers' posts -->
     <div class="feed-toggle">
         <a href="{% url 'home' %}?feed=trending" class="toggle-btn {% if feed_type == 'trending' %}active{% endif %}">Trending</a>
         <a href="{% url 'home' %}?feed=followers" class="toggle-btn {% if feed_type == 'followers' %}active{% endif %}">Only Followers</a>
     </div>
+    {% endif %}
 
     <!-- Container for loading the list of posts -->
     <div id="post-list">
