@@ -99,6 +99,84 @@ Overall, Djocial exemplifies the integration of modern web development practices
         -   "Trending" shows posts that are currently popular across the platform.
   
  ## Wireframes
+
+## Diagrams
+
+```mermaid
+erDiagram
+    User ||--o{ Post : creates
+    User ||--o{ Comment : writes
+    User ||--o{ Follow : follows
+    User ||--o{ Report : reports
+    User ||--o{ Profile : has
+    Post ||--o{ Comment : has
+    Post ||--o{ Report : has
+    Comment ||--o{ Comment : replies_to
+    Post }|--|{ Follow : has
+    Post }|--|{ Report : has
+```
+
+## Database Schema
+
+### User
+| Column    | Type          | Description                    |
+|-----------|---------------|--------------------------------|
+| id        | Integer        | Primary Key, Auto-increment     |
+| username  | CharField      | Unique username                 |
+| email     | EmailField     | Unique email address            |
+| password  | CharField      | Hashed password                 |
+| ...       | ...           | Additional user fields          |
+
+### Post
+| Column      | Type              | Description                    |
+|-------------|-------------------|--------------------------------|
+| id          | Integer           | Primary Key, Auto-increment     |
+| slug        | SlugField         | Unique identifier for the post |
+| author      | ForeignKey(User)  | Reference to the user who created the post |
+| content     | TextField         | Main content of the post        |
+| image       | CloudinaryField   | Image associated with the post  |
+| created_on  | DateTimeField     | Timestamp for post creation     |
+| updated_on  | DateTimeField     | Timestamp for last update       |
+| status      | Integer           | Post status (Draft/Published)   |
+| likes       | ManyToManyField(User) | Users who liked the post      |
+
+### Comment
+| Column      | Type              | Description                    |
+|-------------|-------------------|--------------------------------|
+| id          | Integer           | Primary Key, Auto-increment     |
+| post        | ForeignKey(Post)  | Reference to the related post  |
+| author      | ForeignKey(User)  | Reference to the user who wrote the comment |
+| body        | TextField         | Content of the comment          |
+| approved    | Boolean           | Whether the comment is approved |
+| created_on  | DateTimeField     | Timestamp for comment creation  |
+| parent      | ForeignKey('self')| Parent comment for nesting (nullable) |
+
+### Follow
+| Column      | Type              | Description                    |
+|-------------|-------------------|--------------------------------|
+| id          | Integer           | Primary Key, Auto-increment     |
+| follower    | ForeignKey(User)  | User who is following           |
+| following   | ForeignKey(User)  | User being followed            |
+| created_on  | DateTimeField     | Timestamp for follow creation   |
+
+### Report
+| Column      | Type              | Description                    |
+|-------------|-------------------|--------------------------------|
+| id          | Integer           | Primary Key, Auto-increment     |
+| post        | ForeignKey(Post)  | Post being reported            |
+| reporter    | ForeignKey(User)  | User who reported the post     |
+| reason      | TextField         | Reason for the report           |
+| created_on  | DateTimeField     | Timestamp for report creation   |
+| reviewed    | Boolean           | Whether the report has been reviewed |
+
+### Profile
+| Column      | Type              | Description                    |
+|-------------|-------------------|--------------------------------|
+| id          | Integer           | Primary Key, Auto-increment     |
+| user        | OneToOneField(User) | Reference to the user           |
+| bio         | CharField         | Short biography of the user     |
+
+
  ## Technologies Used
 
 **Social** leverages a variety of technologies and libraries to deliver a robust and responsive social media platform. Below is a list of the key technologies and tools used in this project:
@@ -204,6 +282,37 @@ The following table details the manual testing of each feature implemented in **
 | Search Functionality                      | Users can search for users and posts using a search bar, and results include matching profiles and posts.              | Passed      |
 | Infinite Scrolling                         | Users can scroll through posts infinitely, with more content loading automatically as they scroll.                      | Passed      |
 | Feed Customization                         | Users can switch between feed options like "Only Followers" and "Trending" to customize their content experience.       | Passed      |
+
+### Mobile Testing
+
+- I performed hands-on testing of the Djocial site on my Android device, thoroughly navigating through the application to verify the functionality of all features, including buttons and processes. Unfortunately, I did not have the opportunity to test on iOS devices personally.
+- To address this, I enlisted friends and family to test the site on their iOS devices. They followed the same procedures to ensure functionality, although iOS coverage was not complete.
+- Testing was primarily conducted using Google Chrome, with Chrome Developer Tools being extensively used to assess responsiveness across various screen sizes. Additional testing was done on Firefox and Opera for desktop, as well as Google Chrome, Opera, and Brave on the Nothing Phone (2).
+- The site is responsive across device widths from 320px to 2600px.
+
+Here is a summary of devices and screen sizes tested using Google Developer Tools:
+
+| Device                   | Screen Size     | Tested |
+|--------------------------|-----------------|--------|
+| BlackBerry Z30           | 360px x 640px   | ✅     |
+| BlackBerry PlayBook      | 600px x 1024px  | ✅     |
+| Samsung Galaxy Note 3    | 360px x 640px   | ✅     |
+| Samsung Galaxy S3        | 360px x 640px   | ✅     |
+| Samsung Galaxy S9+       | 320px x 658px   | ✅     |
+| LG Optimus L70           | 384px x 640px   | ✅     |
+| Microsoft Lumia 550      | 640px x 360px   | ✅     |
+| Microsoft Lumia 950      | 360px x 640px   | ✅     |
+| Nexus 4                  | 384px x 640px   | ✅     |
+| Nokia Lumia 520          | 320px x 533px   | ✅     |
+| Nokia N9                 | 480px x 854px   | ✅     |
+| Pixel 3                  | 393px x 786px   | ✅     |
+| Apple iPad Mini          | 468px x 4024px  | ✅     |
+| Apple iPhone 4           | 320px x 480px   | ✅     |
+| Apple iPhone 5/S         | 320px x 568px   | ✅     |
+| Apple iPhone 6/7/8       | 375px x 667px   | ✅     |
+| Apple iPhone 6/7/8 Plus  | 414px x 736px   | ✅     |
+| Apple iPhone X           | 375px x 812px   | ✅     |
+
 
 ## Data Storage
 
