@@ -13,6 +13,18 @@
   <!-- Display the content of the post, preserving formatting and line breaks -->
   <p class="post-content">{{ post.content|safe|linebreaks }}</p>
 
+  <!-- Display the image associated with the post -->
+  {% if post.image %}
+    <div class="post-image">
+      <img src="{{ post.image.url }}" alt="Image for {{ post.content|slice:":50" }}" />
+    </div>
+  {% else %}
+    <!-- Optionally, you can display a default image or nothing if no image is provided -->
+    <div class="post-image">
+      <!-- <img src="URL_TO_DEFAULT_IMAGE" alt="No image available" /> -->
+    </div>
+  {% endif %}
+
   <!-- Button linking to the detailed view of the post -->
   <div class="button-container">
     <a class="view-post-button" href="{% url 'post_detail' post.slug %}">

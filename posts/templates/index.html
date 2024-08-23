@@ -3,14 +3,15 @@
 {% block content %}
     {% if user.is_authenticated %}
     <div class="post-form-container">
-        <form method="post" action="{% url 'create_post' %}" class="post-form">
+        <form method="post" action="{% url 'create_post' %}" enctype="multipart/form-data" class="post-form">
             {% csrf_token %}
-            <!-- Textarea for creating a new post -->
             <div>
                 <textarea id="postContent" name="content" class="form-control" rows="4" placeholder="What's new..." maxlength="350" required></textarea>
                 <small id="charCount" class="form-text text-muted">0/350 characters</small>
             </div>
-            <!-- Submit button for the post form -->
+            <div>
+                <input type="file" name="image" accept="image/*">
+            </div>
             <button type="submit" class="btn-primary">Submit</button>
         </form>
     </div>

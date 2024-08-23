@@ -16,7 +16,7 @@ class Post(models.Model):
     # Main text content of the post
     content = models.TextField()
     # Image associated with the post
-    image = CloudinaryField('image', default='placeholder')
+    image = CloudinaryField('image', blank=True, null=True)
     # Timestamp for post creation
     created_on = models.DateTimeField(auto_now_add=True)
     # Timestamp for last update

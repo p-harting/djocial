@@ -107,10 +107,11 @@ class PostForm(forms.ModelForm):
         required=True,
         label=''
     )
+    image = forms.ImageField(required=False, label='Image')
 
     class Meta:
         model = Post
-        fields = ['content']
+        fields = ['content', 'image']
 
 class ReportForm(forms.ModelForm):
     class Meta:
@@ -140,7 +141,6 @@ def report_post(request, slug):
     return render(request, 'report_form.html', {'form': form, 'post': post})
 
 class CreatePostView(LoginRequiredMixin, FormView):
-    # View for creating a new post
     form_class = PostForm
     template_name = 'index.html'
     success_url = '/'
@@ -243,7 +243,6 @@ class AccountView(LoginRequiredMixin, DetailView):
         return render(request, self.template_name, context)
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
-    # View for updating a post
     model = Post
     fields = ['content', 'image']
     template_name = 'edit_post.html'
