@@ -1,36 +1,36 @@
-<div class="post-container">
-  <!-- Display the post's metadata: author and creation date -->
-  <p class="post-header">
-    <strong>Author:</strong>
-    <a href="{% url 'account' pk=post.author.pk %}">
-      {{ post.author }}
-    </a>
-    | <strong>Date:</strong> {{ post.created_on|date:"d M Y H:i" }}
-  </p>
+{% for post in posts %}
+  <div class="post-container">
+    <!-- Display the post's metadata: author and creation date -->
+    <p class="post-header">
+      <strong>Author:</strong>
+      <a href="{% url 'account' pk=post.author.pk %}">
+        {{ post.author }}
+      </a>
+      | <strong>Date:</strong> {{ post.created_on|date:"d M Y H:i" }}
+    </p>
 
-  <!-- Display the content of the post, preserving formatting and line breaks -->
-  <div class="post-content">{{ post.content|safe|linebreaks }}</div>
+    <!-- Display the content of the post, preserving formatting and line breaks -->
+    <div class="post-content">{{ post.content|safe|linebreaks }}</div>
 
-  <!-- Display the image associated with the post -->
-  {% if post.image %}
-    <div class="post-image">
-      <img src="{{ post.image.url }}" alt="Image for {{ post.content|slice:":50" }}">
+    <!-- Display the image associated with the post -->
+    {% if post.image %}
+      <div class="post-image">
+        <img src="{{ post.image.url }}" alt="Image for {{ post.content|slice:":50" }}">
+      </div>
+    {% else %}
+      <div class="post-image">
+        <!-- <img src="URL_TO_DEFAULT_IMAGE" alt="No image available" /> -->
+      </div>
+    {% endif %}
+
+    <!-- Button linking to the detailed view of the post -->
+    <div class="button-container">
+      <a class="view-post-button" href="{% url 'post_detail' post.slug %}">
+        View post
+      </a>
     </div>
-  {% else %}
-    <div class="post-image">
-      <!-- <img src="URL_TO_DEFAULT_IMAGE" alt="No image available" /> -->
-    </div>
-  {% endif %}
-
-  <!-- Button linking to the detailed view of the post -->
-  <div class="button-container">
-    <a class="view-post-button" href="{% url 'post_detail' post.slug %}">
-      View post
-    </a>
   </div>
-</div>
-
 {% empty %}
-<!-- Message displayed if no posts are available -->
-<p class="empty-state">Nothing posted yet.</p>
+  <!-- Message displayed if no posts are available -->
+  <p class="empty-state">Nothing posted yet.</p>
 {% endfor %}
